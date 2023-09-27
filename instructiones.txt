@@ -1,0 +1,23 @@
+Iniciar el pr oyecto nuevo:
+npx expo init projectName
+    Manage workflow to use Expo (easier) - Does not create android and ios folder in the project
+
+To run the project:
+npx expo start (new way)
+or continue using npm expo start as per package.json
+
+Para instalar la dependencia que detecta la conex a internet:
+expo install @react-native-community/netinfo
+
+PUBLISHING TO EXPO EAS (Expo Application Services)
+- Follow instructions on Expo webpage to install and configure EAS
+- build the app
+- Configure to generate apk or to publish to a online store.
+
+
+
+Instalar React Native Elements
+npm install @rneui/base @rneui/themed
+
+Instalar async storage:
+npm i @react-native-async-storage/async-storage
