@@ -13,14 +13,13 @@ import { Divider } from "@rneui/themed";
 import { useStore } from "../../globalStore/useStore";
 import getProducts from "../../hooks/getProducts"
 import shtemmaLogo from "../../../assets/sthemma.jpg";
+import cacheProducts from "../../hooks/cacheProducts"
 
 //==================COMPONENT========================
-export default function Display() {
+export default  function Display() {
   const setDarkBg = useStore((state) => state.setDarkBg);
 
-  // let products = useProducts(1); //Retrieve all products for a given owner from API
-  // products = products.prodUser;
-
+  //  cacheProducts(1);
   let products = getProducts(1);
 // products = useStore((state) => state.prods);
   const subProducts = products?.slice(0, 10); //Temporary to show only 10 prods in the app

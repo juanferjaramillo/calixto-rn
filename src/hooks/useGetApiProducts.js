@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default function useProducts(ownerId) {
+export default function useGetApiProducts(ownerId) {
     const [prods, setProds] = useState([]);
     let products = [];
     useEffect( ()=> {
