@@ -1,7 +1,11 @@
 import { create } from "zustand";
 
 export const useStore = create((set) => ({
+  userAuth: 1,
+  setUserLogin: (uId) => set((state) => ({ userAuth: uId })),
+  prods: [],
+  setUserProds: (pr) => set((state) => ({ prods: pr })),
   bg: "lightblue",
-  darkBg: () => set((state) => ({ bg: "tomato" })),
-  lightBg: () => set((state) => ({ bg: "lightblue" })),
+  setDarkBg: () => set((state) => ({ bg: "tomato" })),
+  setLightBg: () => set((state) => ({ bg: "lightblue" })),
 }));

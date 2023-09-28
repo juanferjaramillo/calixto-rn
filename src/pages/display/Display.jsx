@@ -11,16 +11,19 @@ import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
 import { Divider } from "@rneui/themed";
 import { useStore } from "../../globalStore/useStore";
-import useProducts from "../../hooks/useProducts";
+import getProducts from "../../hooks/getProducts"
 import shtemmaLogo from "../../../assets/sthemma.jpg";
 
 //==================COMPONENT========================
 export default function Display() {
-  const darkBg = useStore((state) => state.darkBg);
+  const setDarkBg = useStore((state) => state.setDarkBg);
 
-  let products = useProducts(1);
-  products = products.prodUser;
-  const subProducts = products?.slice(0, 10);
+  // let products = useProducts(1); //Retrieve all products for a given owner from API
+  // products = products.prodUser;
+
+  let products = getProducts(1);
+// products = useStore((state) => state.prods);
+  const subProducts = products?.slice(0, 10); //Temporary to show only 10 prods in the app
 
   //------------------Drawer contents----------------------
   const navigationView = () => (
@@ -36,7 +39,7 @@ export default function Display() {
       <Text style={styles.paragraph}>Atributos</Text>
       <Text style={styles.paragraph}>Producto</Text>
       <Divider width={30} />
-      <Text onPress={darkBg} style={styles.paragraph}>
+      <Text onPress={setDarkBg} style={styles.paragraph}>
         Salir
       </Text>
     </View>
@@ -67,17 +70,17 @@ export default function Display() {
           </View> */}
 
           <Card
-          key={999}
-          id={"producto siempre offline"}
-          productoNombre={"Este es un Producto Offline"}
+            key={999}
+            id={"producto siempre offline"}
+            productoNombre={"Este es un Producto Offline"}
           >
             <Image
-            source={shtemmaLogo}
-            resizeMode="contain"
-          style={{ width: "90%", height: "90%" }}
-          />
+              source={shtemmaLogo}
+              resizeMode="contain"
+              style={{ width: "90%", height: "90%" }}
+            />
           </Card>
-          
+
           {subProducts?.map((p) => {
             return (
               <Card

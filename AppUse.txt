@@ -1,0 +1,5 @@
+El usuario se loguea mientras esta online.
+Asi se validan las credenciales y se bajan sus productos al Async Storage
+y las categorias y proveedores al zustand persistent
+Tiene la opcion de menu de bajar las imagenes que se sobreescriben si existen.
+Si se desloguea se borra el Async Storage pero se conservan las fotos.
