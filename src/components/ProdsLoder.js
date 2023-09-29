@@ -3,15 +3,17 @@ import axios from "axios";
 import cache from "../utility/cache";
 import getProducts from "../hooks/getProducts";
 
+export default function ProdsLoader(userId) {
 
-export default  function ProdsLoader(userId) {
-  let products = getProducts(1);
-  products = products?.slice(0, 10);
-  console.log("prdd",products);
+  async function gp () {
+    let produ = await getProducts(1);
+    produ = produ?.slice(0, 1);
+    console.log("prdd", produ[0]);
+    return produ;
+  }
+  gp();
 
-
-//   cache.store("producto","almendra");
+  //   cache.store("producto","almendra");
 
   // console.log("reading",cache.get("producto"));
-
 }

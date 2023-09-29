@@ -7,6 +7,7 @@ import axios from "axios";
 import { PD } from "./assets/prodsData";
 import { useStore } from "./src/globalStore/useStore";
 import ProdsLoader from "./src/components/ProdsLoder";
+import getProducts from "./src/hooks/getProducts";
 
 //download producto information from backend
 // async function DownloadProdsData() {
@@ -33,12 +34,19 @@ export default function App() {
 
   //If online, donwload product information to asyncStorage
 
+  async function gp () {
+    let produ = await getProducts(1);
+    produ = produ?.slice(0, 1);
+    console.log("prdd", produ[0]);
+    return produ[0];
+  }
+  gp();
+
   //----------------render--------------------
   return (
     <>
-    <ProdsLoader />
-      <StatusBar hidden={true} />
-      <Display /> 
+      {/* <StatusBar hidden={true} />
+      <Display />  */}
     </>
   );
 }

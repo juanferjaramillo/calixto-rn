@@ -3,16 +3,15 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default function useGetApiProducts(ownerId) {
+export default function useGetApiProducts(userId) {
     const [prods, setProds] = useState([]);
     let products = [];
     useEffect( ()=> {
       async function getProd () {
-          products =  (await axios(`https://calixtosrv.up.railway.app/prodsuser/${ownerId}`)).data
+          products =  (await axios(`https://calixtosrv.up.railway.app/prodsuser/${userId}`)).data
           setProds(products ); 
       }
       getProd();
-      
   },[])
     return prods;
   }
