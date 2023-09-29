@@ -27,16 +27,15 @@ const get = async (key) => {
     try {
         const value = await AsyncStorage.getItem(prefix+key);
         const item = JSON.parse(value);    
-
+        
         if (!item) return null;
-
 
         if (isExpired(item)) {
             AsyncStorage.removeItem(prefix + key);
             return null;
         }
-
-        return item.value
+        console.log("item", value);
+        return value
 
     } catch (error) {
         console.log(error);
