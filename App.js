@@ -6,6 +6,7 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import axios from "axios";
 import { PD } from "./assets/prodsData";
 import { useStore } from "./src/globalStore/useStore";
+import ProdsLoader from "./src/components/ProdsLoder";
 
 //download producto information from backend
 // async function DownloadProdsData() {
@@ -35,6 +36,7 @@ export default function App() {
   //----------------render--------------------
   return (
     <>
+    <ProdsLoader />
       <StatusBar hidden={true} />
       <Display /> 
     </>

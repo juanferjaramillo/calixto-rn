@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
 const prefix = "cache";
@@ -10,7 +10,7 @@ const store = async (key, value) => {
         value,
         timestamp: Date.now()
     }
-    await AsyncStorage.setItem(prefix + key, JSON.stringify(item));
+    await AsyncStorage.setItem(prefix + key, JSON.stringify(value));
   } catch (error) {
     console.log(error);
   }
