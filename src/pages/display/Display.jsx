@@ -21,7 +21,6 @@ export default function Display() {
   const setLightBg = useStore((state) => state.setLightBg);
 
   const [products, setProducts] = useState(null);
-  const [render, setRender] = useState(false);
 
   const handleUpdateScreen = () => {
     setLightBg();
@@ -62,7 +61,8 @@ export default function Display() {
 
   //-------------------RENDER------------------------------
   return (
-    <Layout>
+   
+   <Layout>
       <DrawerLayoutAndroid
         // ref={drawer}
         drawerWidth={200}
