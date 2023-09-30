@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default async function getProducts(userId) {
     
-  async function gp() {
+  async function gp(userId) {
      produ = (
       await axios(`https://calixtosrv.up.railway.app/prodsuser/${userId}`)
     ).data;
@@ -15,7 +15,7 @@ export default async function getProducts(userId) {
     return produ;
 }
 
-let products = await gp();
+let products = await gp(1);
 return products;
 // console.log("ppp",products);
 }

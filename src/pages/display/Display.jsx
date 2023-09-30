@@ -11,18 +11,32 @@ import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
 import { Divider } from "@rneui/themed";
 import { useStore } from "../../globalStore/useStore";
-import getProducts from "../../hooks/getProducts"
 import shtemmaLogo from "../../../assets/sthemma.jpg";
-import cacheProducts from "../../hooks/cacheProducts"
+import cache from "../../utility/cache";
+import { useEffect, useState } from "react";
 
 //==================COMPONENT========================
-export default  function Display() {
+export default function Display() {
   const setDarkBg = useStore((state) => state.setDarkBg);
+  const setLightBg = useStore((state) => state.setLightBg);
 
-  //  cacheProducts(1);
-  let products = getProducts(1);
-// products = useStore((state) => state.prods);
-  const subProducts = products?.slice(0, 10); //Temporary to show only 10 prods in the app
+  const [products, setProducts] = useState(null);
+  const [render, setRender] = useState(false);
+
+  const handleUpdateScreen = () => {
+    setLightBg();
+  };
+
+  async function getProdsAS() {         
+    const products = await cache.get("producto");
+    setProducts(products.slice(0,10));
+  }
+  useEffect(() => {
+    getProdsAS();
+  }, []);
+
+  // products = useStore((state) => state.prods);
+  // const subProducts = products?.slice(0, 10); //Temporary to show only 10 prods in the app
 
   //------------------Drawer contents----------------------
   const navigationView = () => (
@@ -36,7 +50,9 @@ export default  function Display() {
       <Text style={styles.paragraph}>Disponibilidad</Text>
       <Text style={styles.paragraph}>Categoría</Text>
       <Text style={styles.paragraph}>Atributos</Text>
-      <Text style={styles.paragraph}>Producto</Text>
+      <Text onPress={handleUpdateScreen} style={styles.paragraph}>
+        Producto
+      </Text>
       <Divider width={30} />
       <Text onPress={setDarkBg} style={styles.paragraph}>
         Salir
@@ -80,7 +96,7 @@ export default  function Display() {
             />
           </Card>
 
-          {subProducts?.map((p) => {
+          {products?.map((p) => {
             return (
               <Card
                 key={p.id}
@@ -90,9 +106,6 @@ export default  function Display() {
               />
             );
           })}
-          {/* {products?.map((p) => {
-            return <Card key={p.id} id={p.id} productUrl={p.prodUrl} productoNombre={p.nombre} />;
-          })} */}
         </ScrollView>
       </DrawerLayoutAndroid>
     </Layout>

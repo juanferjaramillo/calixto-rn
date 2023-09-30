@@ -55,7 +55,7 @@ export default function Layout(props) {
             backgroundColor: "orange",
           }}
         >
-          <Text style={{ color: "white", fontSize: 20, height: 40 }}>SF Group</Text>
+          <Text style={{ color: "white", fontSize: 20, height: 40 }}>SF Group v0.1.1</Text>
           <View
           //online indicator
           style={{

@@ -7,7 +7,7 @@ export default function ProdsLoader(userId) {
 
   async function gp () {
     let produ = await getProducts(1);
-    produ = produ?.slice(0, 1);
+    produ = produ?.slice(0, 3);
     console.log("prdd", produ[0]);
     return produ;
   }
