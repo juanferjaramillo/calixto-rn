@@ -1,3 +1,5 @@
+//Return products.prodUser got from API
+
 import axios from "axios";
 
 export default async function getProducts(userId) {
@@ -13,5 +15,6 @@ export default async function getProducts(userId) {
   }
 
   let products = await gp(userId);
+
   return products;
 }

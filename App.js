@@ -16,8 +16,8 @@ export default function App() {
     <Text>.</Text>
     <Text>Welcome</Text>
     <ShowAS />
-      {/* <StatusBar hidden={true} /> */}
-      {/* <Display />  */}
+      {/* <StatusBar hidden={true} />
+      <Display />  */}
     </>
   );
 }

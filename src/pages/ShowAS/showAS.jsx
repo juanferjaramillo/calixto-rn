@@ -2,6 +2,8 @@ import { Text, View } from "react-native";
 import getProducts from "../../hooks/getProducts";
 import cache from "../../utility/cache";
 import { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import Display from "../display/Display";
 
 //------------------COMPONENT--------------------
 export default function ShowAS() {
@@ -13,28 +15,24 @@ export default function ShowAS() {
   // let p3 = null;
   // console.log("online", online); //////////////////////////
 
+  // const [products, setProducts] = useState(null);
+
   useEffect(() => {
-    runit();
-  }, []);
+    console.log("starting showAS");
+    runit();  //basic part to check AsyncStorage
+    }, []);
+
 
   async function runit() {
     // if (online) {
     console.log("online, storing products"); //////////////////////////
     // products = await getP();
-    await storeAS({ nombre: "Matias" });
+    await storeAS("MatiasJaramillo" );
     // }
     //Always gets the products from AsyncStorage
-    let p2 = await getAS("producto");
+    let p2 = await getAS("name");
     setP3(p2.nombre);
     console.log("leidoAS:", p3); //////////////////////////
-  }
-
-  async function getP() {
-    //get products form API and returns them
-    let produ = await getProducts(1);
-    // produ = produ?.slice(0, 5);
-    // console.log("getprod", produ);
-    return produ;
   }
 
   async function storeAS(item) {
@@ -48,7 +46,7 @@ export default function ShowAS() {
     //Gets the products stored in AsyncStorage
     console.log("reading"); //////////////////////////
     const ppp = await cache.get(key);
-    // console.log('readingEnd');
+    console.log('readingEnd', ppp);
     return ppp;
   }
 
@@ -64,6 +62,10 @@ export default function ShowAS() {
     setMsg("nada por aqui");
   };
 
+  // console.log("prd", products[1].id);
+
+  //------------------render------------------
+
   return (
     <View>
       <Text>.</Text>
@@ -74,6 +76,9 @@ export default function ShowAS() {
       <Text onPress={handleGet}>GetAS</Text>
       <Text>.</Text>
       <Text>{msg}</Text>
+
+      <StatusBar hidden={true} />
+      <Display /> 
     </View>
   );
 }

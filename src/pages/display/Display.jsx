@@ -1,5 +1,4 @@
 import {
-  Button,
   DrawerLayoutAndroid,
   Text,
   StyleSheet,
@@ -14,29 +13,51 @@ import { useStore } from "../../globalStore/useStore";
 import shtemmaLogo from "../../../assets/sthemma.jpg";
 import cache from "../../utility/cache";
 import { useEffect, useState } from "react";
+import getProducts from "../../hooks/getProducts";
+import { useNetInfo } from "@react-native-community/netinfo";
 
 //==================COMPONENT========================
 export default function Display() {
   const setDarkBg = useStore((state) => state.setDarkBg);
   const setLightBg = useStore((state) => state.setLightBg);
-
+const netInfo = useNetInfo();
   const [products, setProducts] = useState(null);
+
+  useEffect(()=>{
+    netInfo.isInternetReachable &&
+    getFromApi(1); //gets from API and stores in AS as productos
+    getProdsAS("productos") //gets from AS and stores in local state
+  },[])
 
   const handleUpdateScreen = () => {
     setLightBg();
   };
 
-  async function getProdsAS() {         
-    const products = await cache.get("producto");
-    setProducts(products.slice(0,10));
-  }
-  useEffect(() => {
-    getProdsAS();
-  }, []);
+  async function getFromApi(userId) {
+    const prod = await getProducts(userId);
+  //  console.log(prod[0]);
+  //  setProducts(prod);
+  const subProds = prod.slice(0,10)
+  // console.log("x", subProds);
+   await storeAS(subProds);
+  //  await getAS("productos");
+ }
+
+ async function storeAS(item) {
+  //Store products gotten from API into AsyncStorage
+  // console.log("storing", item); //////////////////////////
+  await cache.store("productos", item);
+  // console.log('storingEnd');
+}
+
+  async function getProdsAS(key) {         
+    const ppp = await cache.get(key);
+    // console.log('ppp', ppp);
+    setProducts(ppp);
+  };
 
   // products = useStore((state) => state.prods);
-  // const subProducts = products?.slice(0, 10); //Temporary to show only 10 prods in the app
-
+  
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
@@ -59,6 +80,7 @@ export default function Display() {
     </View>
   );
 
+  // console.log('p4',products[0]["id"]);
   //-------------------RENDER------------------------------
   return (
    
@@ -99,10 +121,10 @@ export default function Display() {
           {products?.map((p) => {
             return (
               <Card
-                key={p.id}
-                id={p.id}
-                productUrl={p.prodUrl}
-                productoNombre={p.nombre}
+                key={p["id"]}
+                id={p["id"]}
+                productUrl={p["prodUrl"]}
+                productoNombre={p["nombre"]}
               />
             );
           })}
