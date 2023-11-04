@@ -7,8 +7,7 @@ export default async function getProducts(userId) {
     try {
       // produ = (await axios(`https://calixtosrv.up.railway.app/prodsuser/${id}`)).data;
       produ = (await axios(`http://192.168.1.10:3003/prodsuser/${id}`)).data;
-      // let products = useGetApiProducts(userId); //Retrieve all products for a given owner from API
-      produ = produ?.prodUser;
+     produ = produ?.prodUser;
       return produ;
     } catch (error) {
       return [];

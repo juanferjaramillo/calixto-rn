@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Image,
+  Pressable
 } from "react-native";
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
@@ -22,7 +22,8 @@ import NetInfo from "@react-native-community/netinfo";
 export default function Display(props) {
   const setDarkBg = useStore((state) => state.setDarkBg);
   const setLightBg = useStore((state) => state.setLightBg);
-  const [products, setProducts] = useState(null);
+  const setFilteredProds = useStore((state)=>state.setFilteredProds);
+  const prods = useStore((state)=>state.prods);
   const [ir, setIr] = useState(false);
 
   useEffect(() => {
@@ -39,6 +40,8 @@ export default function Display(props) {
  
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
+    await cache.clear();
+    const products = (await getProducts(1)).slice(0,15);
     products.map(async (p) => {
       await cache.store(p.id, p);
     });
@@ -48,18 +51,17 @@ export default function Display(props) {
   async function displayFromAS() {
     console.log("from AS");
     const ppp = await cache.getAll();
-    // console.log("retrieved", ppp);
-    setProducts(ppp);
+    setFilteredProds(ppp)
   }
 
   async function displayFromApi() {
     console.log("from API");
     //Brings info from Api and displays the cards.
     const prod = await getProducts(1);
-    setProducts(prod.slice(0, 10));
+    setFilteredProds(prod.slice(0, 20));
   }
 
-  // products = useStore((state) => state.prods);
+  let filteredProds = useStore((state) => state.filteredProds);
 
   //------------------Drawer contents----------------------
   const navigationView = () => (
@@ -104,8 +106,10 @@ export default function Display(props) {
         renderNavigationView={navigationView}
       >
         <ScrollView width={360} Display={"flex"} alignItems={"center"}>
-          {products &&
-            products.map((p) => (
+          {/* {products &&
+            products.map((p) => ( */}
+          {filteredProds &&
+            filteredProds.map((p) => (
               <Card
                 key={p.id}
                 id={p.id}
