@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import Display from "../display/Display";
 
 //------------------COMPONENT--------------------
-export default function ShowAS() {
+export default function ShowAS(props) {
   const [p3, setP3] = useState(null);
   const [msg, setMsg] = useState("mensaje inicial");
   // const [online, setOnline] = useState(false);
@@ -17,15 +17,15 @@ export default function ShowAS() {
 
   // const [products, setProducts] = useState(null);
 
-  useEffect(() => {
-    console.log("starting showAS");
-    runit();  //basic part to check AsyncStorage
-    }, []);
+  // useEffect(() => {
+  //   console.log("starting showAS");
+  //   runit();  //basic part to check AsyncStorage
+  //   }, []);
 
 
   async function runit() {
     // if (online) {
-    console.log("online, storing products"); //////////////////////////
+    // console.log("online, storing products"); //////////////////////////
     // products = await getP();
     await storeAS("MatiasJaramillo" );
     // }
@@ -62,23 +62,23 @@ export default function ShowAS() {
     setMsg("nada por aqui");
   };
 
-  // console.log("prd", products[1].id);
+  console.log("IR?", props.ir);
 
   //------------------render------------------
 
   return (
     <View>
-      <Text>.</Text>
+      {/* <Text>.</Text>
       <Text onPress={handleStore}>StoreInAS</Text>
       <Text>.</Text>
       <Text onPress={handleClearMsg}>ClearMessage</Text>
       <Text>.</Text>
       <Text onPress={handleGet}>GetAS</Text>
       <Text>.</Text>
-      <Text>{msg}</Text>
+      <Text>{msg}</Text> */}
 
       <StatusBar hidden={true} />
-      <Display /> 
+     <Display ir={props.ir} />
     </View>
   );
 }

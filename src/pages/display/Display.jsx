@@ -15,49 +15,53 @@ import cache from "../../utility/cache";
 import { useEffect, useState } from "react";
 import getProducts from "../../hooks/getProducts";
 import { useNetInfo } from "@react-native-community/netinfo";
+import reactDom from "react-dom";
+import NetInfo from "@react-native-community/netinfo";
 
 //==================COMPONENT========================
-export default function Display() {
+export default function Display(props) {
   const setDarkBg = useStore((state) => state.setDarkBg);
   const setLightBg = useStore((state) => state.setLightBg);
-const netInfo = useNetInfo();
   const [products, setProducts] = useState(null);
+  const [ir, setIr] = useState(false);
 
-  useEffect(()=>{
-    netInfo.isInternetReachable &&
-    getFromApi(1); //gets from API and stores in AS as productos
-    getProdsAS("productos") //gets from AS and stores in local state
-  },[])
+  useEffect(() => {
+    async function checkConex() {
+      setIr((await NetInfo.fetch()).isInternetReachable);
+    }
+    displayFromApi();
+    checkConex();
+    console.log("ir2", ir);
+  }, []);
 
   const handleUpdateScreen = () => {
     setLightBg();
   };
 
-  async function getFromApi(userId) {
-    const prod = await getProducts(userId);
-  //  console.log(prod[0]);
-  //  setProducts(prod);
-  const subProds = prod.slice(0,10)
-  // console.log("x", subProds);
-   await storeAS(subProds);
-  //  await getAS("productos");
- }
+  async function storeAS() {
+    //Store products gotten from API into AsyncStorage
+    products.map(async (p) => {
+      // console.log("storing", p);
+      await cache.store(p.id, p);
+    });
+    console.log("storingEnd");
+  }
 
- async function storeAS(item) {
-  //Store products gotten from API into AsyncStorage
-  // console.log("storing", item); //////////////////////////
-  await cache.store("productos", item);
-  // console.log('storingEnd');
-}
+  async function showAS() {
+    // console.log("Retrieving");
+    const ppp = await cache.get("100003");
+    // console.log("retrieved", ppp);
+    setProducts([ppp]);
+  }
 
-  async function getProdsAS(key) {         
-    const ppp = await cache.get(key);
-    // console.log('ppp', ppp);
-    setProducts(ppp);
-  };
+  async function displayFromApi() {
+    //Brings info from Api and displays the cards.
+    const prod = await getProducts(1);
+    setProducts(prod.slice(0, 10));
+  }
 
   // products = useStore((state) => state.prods);
-  
+
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
@@ -74,60 +78,37 @@ const netInfo = useNetInfo();
         Producto
       </Text>
       <Divider width={30} />
+      <Text onPress={storeAS} style={styles.paragraph}>
+        St info
+      </Text>
+      <Text onPress={showAS} style={styles.paragraph}>
+        Dw fotos
+      </Text>
+      <Divider width={30} />
       <Text onPress={setDarkBg} style={styles.paragraph}>
         Salir
       </Text>
     </View>
   );
 
-  // console.log('p4',products[0]["id"]);
   //-------------------RENDER------------------------------
   return (
-   
-   <Layout>
+    <Layout>
       <DrawerLayoutAndroid
-        // ref={drawer}
         drawerWidth={200}
         drawerPosition={"left"}
         renderNavigationView={navigationView}
       >
         <ScrollView width={360} Display={"flex"} alignItems={"center"}>
-          {/* <View
-          style={{ display:"flex", height: "8%", backgroundColor:"white", marginBottom:10 }}
-          >
-            <Text
-             style={{color:"red", backgroundColor:"yellow" }}
-            >Este es un Producto Offline</Text>
-
-            <Image
-              source={shtemmaLogo}
-              resizeMode="contain"
-            style={{ width: "100%", height: "100%" }}
-            />
-          </View> */}
-
-          <Card
-            key={999}
-            id={"producto siempre offline"}
-            productoNombre={"Este es un Producto Offline"}
-          >
-            <Image
-              source={shtemmaLogo}
-              resizeMode="contain"
-              style={{ width: "90%", height: "90%" }}
-            />
-          </Card>
-
-          {products?.map((p) => {
-            return (
+          {products &&
+            products.map((p) => (
               <Card
-                key={p["id"]}
-                id={p["id"]}
-                productUrl={p["prodUrl"]}
-                productoNombre={p["nombre"]}
+                key={p.id}
+                id={p.id}
+                prodUrl={p.prodUrl}
+                nombre={p.nombre}
               />
-            );
-          })}
+            ))}
         </ScrollView>
       </DrawerLayoutAndroid>
     </Layout>

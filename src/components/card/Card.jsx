@@ -1,6 +1,7 @@
-import { View, Alert, ScrollView } from "react-native";
-import { Badge, Image, Text } from "@rneui/themed";
+import { View, Text, Alert, ScrollView, Image } from "react-native";
+import { Badge } from "@rneui/themed";
 import { useState } from "react";
+import shtemmaLogo from "../../../assets/sthemma.jpg";
 
 //===============COMPONENT=================
 
@@ -19,7 +20,7 @@ export default function Card(props) {
     setFront((f) => !f);
     // _storeData();
     // AsyncStorage.setItem("key1","value1");
-    console.log("retouched", front);
+    //console.log("retouched", front);
     // Alert.alert("accion!", "toque detectado");
   };
 
@@ -34,56 +35,37 @@ export default function Card(props) {
         backgroundColor: "white",
         marginTop: 5,
         borderRadius: 10,
-        // shadowOffset:10,
-        // shadowOpacity:50,
-        // shadowColor:"#ffffff"
+        shadowOffset: 10,
+        shadowOpacity: 50,
+        shadowColor: "#ffffff",
       }}
       // onTouchEnd={handleCardTouchEnd}
     >
-      <View
-        //codigo
-        style={{ width: 200 }}
-      >
-        <Text style={{ textAlign: "center",  }}>{props.id}</Text>
+      <View style={{ width: 200 }}>
+        <Text style={{ textAlign: "center" }}>{props.id}</Text>
+        <Text style={{ textAlign: "center" }}>{props.nombre}</Text>
       </View>
 
-      {props.children}
-      
-      <View
-        //imagen
-        style={{
-          width: 250,
-          height: 220,
-          marginTop: 1,
-          marginBottom: 2,
+      <Image
+        source={{ uri: props.prodUrl }}
+        resizeMode="contain"
+        style={{ 
+          width: "90%",
+          height: "50%",
+          marginBottom:25,
+          marginTop: 25,
         }}
-      >
-        {/* <Badge
+      />
+
+      {/* <Badge
           status="success" //success, error, primary, warning
           // style={{backgroundColor: "#ff0000"}}
           containerStyle={{ position: "absolute", top: 0, left: 200 }}
         /> */}
-        <Image
-          source={{
-            uri: props.productUrl,
-            // uri: "https://res.cloudinary.com/sthemma/samples/0900001.jpg",
-            // uri: "https://res.cloudinary.com/sthemma/calixto/imgProductos/sthemma.jpg",
-          }}
-          resizeMode="contain"
-          style={{ width: "100%", height: "100%" }}
-          alt="Producto"
-        />
-      </View>
 
-      <View
-        //nombre
-        style={{
-          width: 250,
-          }}
-      >
-          <Text style={{ textAlign: "center" }}>{props.productoNombre.trim()}</Text>
+      <View style={{ width: 210 }}>
+        <Text style={{ textAlign: "center" }}>{props.nombre}</Text>
       </View>
-      
     </View>
   );
 }
