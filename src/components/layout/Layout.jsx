@@ -9,7 +9,7 @@ export default function Layout(props) {
   let onlinecolor = "red";
   
   netInfo.isInternetReachable ? onlinecolor="green" : onlinecolor = "red";
-
+  
   //----------------------- render --------------------------
   return (
     <View

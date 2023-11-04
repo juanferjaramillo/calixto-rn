@@ -29,32 +29,31 @@ export default function Display(props) {
     async function checkConex() {
       setIr((await NetInfo.fetch()).isInternetReachable);
     }
-    displayFromApi();
     checkConex();
-    console.log("ir2", ir);
+    displayFromAS();
   }, []);
 
   const handleUpdateScreen = () => {
     setLightBg();
   };
-
+ 
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
     products.map(async (p) => {
-      // console.log("storing", p);
       await cache.store(p.id, p);
     });
     console.log("storingEnd");
   }
 
-  async function showAS() {
-    // console.log("Retrieving");
-    const ppp = await cache.get("100003");
+  async function displayFromAS() {
+    console.log("from AS");
+    const ppp = await cache.getAll();
     // console.log("retrieved", ppp);
-    setProducts([ppp]);
+    setProducts(ppp);
   }
 
   async function displayFromApi() {
+    console.log("from API");
     //Brings info from Api and displays the cards.
     const prod = await getProducts(1);
     setProducts(prod.slice(0, 10));
@@ -78,11 +77,16 @@ export default function Display(props) {
         Producto
       </Text>
       <Divider width={30} />
+      {ir &&
       <Text onPress={storeAS} style={styles.paragraph}>
-        St info
+        Store to AS
       </Text>
-      <Text onPress={showAS} style={styles.paragraph}>
-        Dw fotos
+      }
+      <Text onPress={displayFromAS} style={styles.paragraph}>
+        Get from AS
+      </Text>
+      <Text onPress={displayFromApi} style={styles.paragraph}>
+        Get from API
       </Text>
       <Divider width={30} />
       <Text onPress={setDarkBg} style={styles.paragraph}>

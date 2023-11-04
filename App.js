@@ -21,10 +21,10 @@ export default function App() {
   }
   ,[])
   
-  console.log("ir1", ir);
+  // console.log("ir1", ir);
   //----------------render--------------------
   return (
-    <View style={{marginTop:25}}>
+    <View style={{marginTop:35}}>
       {/* <Text>.</Text>
       <Text>Welcome</Text> */}
       {/* <ShowAS ir={ir} /> */}

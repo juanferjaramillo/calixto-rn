@@ -27,8 +27,8 @@ const isExpired = (item) => {
 const get = async (key) => {
   try {
     const value = await AsyncStorage.getItem(prefix + key);
-    const item = JSON.parse(value);
     // console.log("cacheGet", value);
+    const item = JSON.parse(value);
 
     if (!item) return null;
 
@@ -42,6 +42,26 @@ const get = async (key) => {
   }
 };
 
+const getAll = async () => {
+  const item = [];
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    for (let i=0; i<keys.length; i++) {
+      const it= JSON.parse(await AsyncStorage.getItem(keys[i]));
+      item.push(it);
+    }
+    if (!item) return null;
+    // if (isExpired(item)) {
+    //   await AsyncStorage.removeItem(prefix + key);
+    //   return null;
+    // }
+    return item;
+  } catch (error) {
+    return [];
+    console.log(error);
+  }
+};
+
 const clear = async () => {
     await AsyncStorage.clear()
 }
@@ -49,5 +69,6 @@ const clear = async () => {
 export default {
   store,
   get,
-  clear
+  getAll,
+  clear,
 };
