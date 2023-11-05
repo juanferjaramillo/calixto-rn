@@ -23,3 +23,17 @@ npm install @rneui/base @rneui/themed
 
 Instalar async storage:
 npm i @react-native-async-storage/async-storage
+
+        <ScrollView width={360} Display={"flex"} alignItems={"center"}>
+          {/* {products &&
+            products.map((p) => ( */}
+          {filteredProds &&
+            filteredProds.map((p) => (
+              <Card
+                key={p.id}
+                id={p.id}
+                prodUrl={p.prodUrl}
+                nombre={p.nombre}
+              />
+            ))}
+        </ScrollView>

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Pressable
+  FlatList,
 } from "react-native";
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
@@ -22,8 +22,8 @@ import NetInfo from "@react-native-community/netinfo";
 export default function Display(props) {
   const setDarkBg = useStore((state) => state.setDarkBg);
   const setLightBg = useStore((state) => state.setLightBg);
-  const setFilteredProds = useStore((state)=>state.setFilteredProds);
-  const prods = useStore((state)=>state.prods);
+  const setFilteredProds = useStore((state) => state.setFilteredProds);
+  const prods = useStore((state) => state.prods);
   const [ir, setIr] = useState(false);
 
   useEffect(() => {
@@ -37,11 +37,11 @@ export default function Display(props) {
   const handleUpdateScreen = () => {
     setLightBg();
   };
- 
+
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
     await cache.clear();
-    const products = (await getProducts(1)).slice(0,15);
+    const products = await getProducts(1);
     products.map(async (p) => {
       await cache.store(p.id, p);
     });
@@ -51,14 +51,14 @@ export default function Display(props) {
   async function displayFromAS() {
     console.log("from AS");
     const ppp = await cache.getAll();
-    setFilteredProds(ppp)
+    setFilteredProds(ppp);
   }
 
   async function displayFromApi() {
     console.log("from API");
     //Brings info from Api and displays the cards.
     const prod = await getProducts(1);
-    setFilteredProds(prod.slice(0, 20));
+    setFilteredProds(prod);
   }
 
   let filteredProds = useStore((state) => state.filteredProds);
@@ -79,11 +79,11 @@ export default function Display(props) {
         Producto
       </Text>
       <Divider width={30} />
-      {ir &&
-      <Text onPress={storeAS} style={styles.paragraph}>
-        Store to AS
-      </Text>
-      }
+      {ir && (
+        <Text onPress={storeAS} style={styles.paragraph}>
+          Store to AS
+        </Text>
+      )}
       <Text onPress={displayFromAS} style={styles.paragraph}>
         Get from AS
       </Text>
@@ -96,7 +96,6 @@ export default function Display(props) {
       </Text>
     </View>
   );
-
   //-------------------RENDER------------------------------
   return (
     <Layout>
@@ -105,19 +104,23 @@ export default function Display(props) {
         drawerPosition={"left"}
         renderNavigationView={navigationView}
       >
-        <ScrollView width={360} Display={"flex"} alignItems={"center"}>
-          {/* {products &&
-            products.map((p) => ( */}
-          {filteredProds &&
-            filteredProds.map((p) => (
+        {filteredProds && (
+          <FlatList
+            data={filteredProds}
+            renderItem={({ item }) => (
               <Card
-                key={p.id}
-                id={p.id}
-                prodUrl={p.prodUrl}
-                nombre={p.nombre}
+                key={item.id}
+                id={item.id}
+                prodUrl={item.prodUrl}
+                nombre={item.nombre}
               />
-            ))}
-        </ScrollView>
+            )}
+            keyExtractor={(item) => item.id}
+            onEndReachedThreshold={0.2}
+          />
+        )}
+
+        {/* scrollview */}
       </DrawerLayoutAndroid>
     </Layout>
   );
