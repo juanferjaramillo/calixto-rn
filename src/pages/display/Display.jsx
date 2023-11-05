@@ -3,20 +3,18 @@ import {
   Text,
   StyleSheet,
   View,
-  ScrollView,
   FlatList,
 } from "react-native";
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
 import { Divider } from "@rneui/themed";
 import { useStore } from "../../globalStore/useStore";
-import shtemmaLogo from "../../../assets/sthemma.jpg";
 import cache from "../../utility/cache";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import getProducts from "../../hooks/getProducts";
 import { useNetInfo } from "@react-native-community/netinfo";
-import reactDom from "react-dom";
 import NetInfo from "@react-native-community/netinfo";
+import ModalFilters from "./ModalFilters";
 
 //==================COMPONENT========================
 export default function Display(props) {
@@ -25,6 +23,8 @@ export default function Display(props) {
   const setFilteredProds = useStore((state) => state.setFilteredProds);
   const prods = useStore((state) => state.prods);
   const [ir, setIr] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const drawer = useRef(null);
 
   useEffect(() => {
     async function checkConex() {
@@ -35,11 +35,13 @@ export default function Display(props) {
   }, []);
 
   const handleUpdateScreen = () => {
+    drawer.current.closeDrawer()
     setLightBg();
   };
 
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
+    drawer.current.closeDrawer()
     await cache.clear();
     const products = await getProducts(1);
     products.map(async (p) => {
@@ -50,15 +52,22 @@ export default function Display(props) {
 
   async function displayFromAS() {
     console.log("from AS");
+    drawer.current.closeDrawer()
     const ppp = await cache.getAll();
     setFilteredProds(ppp);
   }
 
   async function displayFromApi() {
     console.log("from API");
+    drawer.current.closeDrawer()
     //Brings info from Api and displays the cards.
     const prod = await getProducts(1);
     setFilteredProds(prod);
+  }
+
+  const handleFCateg =() => {
+    drawer.current.closeDrawer()
+    setModalVisible(true);
   }
 
   let filteredProds = useStore((state) => state.filteredProds);
@@ -66,14 +75,19 @@ export default function Display(props) {
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
+      
       <Text
-        // onPress={() => drawer.current.closeDrawer()}
         style={styles.paragraph}
       >
         Proveedor
       </Text>
+      
       <Text style={styles.paragraph}>Disponibilidad</Text>
-      <Text style={styles.paragraph}>Categoría</Text>
+      
+      <Text
+      onPress={handleFCateg}
+      style={styles.paragraph}>Categoría</Text>
+      
       <Text style={styles.paragraph}>Atributos</Text>
       <Text onPress={handleUpdateScreen} style={styles.paragraph}>
         Producto
@@ -100,10 +114,17 @@ export default function Display(props) {
   return (
     <Layout>
       <DrawerLayoutAndroid
+        ref={drawer}
         drawerWidth={200}
         drawerPosition={"left"}
         renderNavigationView={navigationView}
       >
+        {modalVisible &&
+        <ModalFilters 
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}        
+        />
+        }
         {filteredProds && (
           <FlatList
             data={filteredProds}

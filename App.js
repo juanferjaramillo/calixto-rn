@@ -5,7 +5,6 @@ import NetInfo from "@react-native-community/netinfo";
 import getProducts from "./src/hooks/getProducts";
 import cache from "./src/utility/cache";
 import { useEffect, useState } from "react";
-import ShowAS from "./src/pages/ShowAS/showAS";
 import { Text, View } from "react-native";
 
 //===============COMPONENT==================
@@ -21,15 +20,11 @@ export default function App() {
   }
   ,[])
   
-  // console.log("ir1", ir);
   //----------------render--------------------
   return (
     <View 
     style={{marginTop:35}}
     >
-      {/* <Text>.</Text>
-      <Text>Welcome</Text> */}
-      {/* <ShowAS ir={ir} /> */}
       <StatusBar hidden={false} />
       <Display /> 
     </View>
