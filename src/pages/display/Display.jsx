@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   FlatList,
+  Image,
 } from "react-native";
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
@@ -35,59 +36,61 @@ export default function Display(props) {
   }, []);
 
   const handleUpdateScreen = () => {
-    drawer.current.closeDrawer()
+    drawer.current.closeDrawer();
     setLightBg();
   };
 
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
-    drawer.current.closeDrawer()
-    await cache.clear();
+    drawer.current.closeDrawer();
+    // await cache.clear();
     const products = await getProducts(1);
     products.map(async (p) => {
       await cache.store(p.id, p);
+      await Image.prefetch(p.prodUrl);
     });
     console.log("storingEnd");
   }
 
   async function displayFromAS() {
     console.log("from AS");
-    drawer.current.closeDrawer()
-    const ppp = await cache.getAll();
-    setFilteredProds(ppp);
-  }
-
-  async function displayFromApi() {
-    console.log("from API");
-    drawer.current.closeDrawer()
-    //Brings info from Api and displays the cards.
-    const prod = await getProducts(1);
+    drawer.current.closeDrawer();
+    const prod = await cache.getAll();
     setFilteredProds(prod);
   }
 
-  const handleFCateg =() => {
-    drawer.current.closeDrawer()
-    setModalVisible(true);
+  // async function displayFromApi() {
+  //   console.log("from API");
+  //   drawer.current.closeDrawer();
+  //   //Brings info from Api and displays the cards.
+  //   const prod = await getProducts(1);
+  //   setFilteredProds(prod.slice(1,10));
+  // }
+
+  async function clearCache() {
+    drawer.current.closeDrawer();
+    await cache.clear();
+    console.log("cache cleared");
   }
+
+  const handleFCateg = () => {
+    drawer.current.closeDrawer();
+    setModalVisible(true);
+  };
 
   let filteredProds = useStore((state) => state.filteredProds);
 
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
-      
-      <Text
-        style={styles.paragraph}
-      >
-        Proveedor
-      </Text>
-      
+      <Text style={styles.paragraph}>Proveedor</Text>
+
       <Text style={styles.paragraph}>Disponibilidad</Text>
-      
-      <Text
-      onPress={handleFCateg}
-      style={styles.paragraph}>Categoría</Text>
-      
+
+      <Text onPress={handleFCateg} style={styles.paragraph}>
+        Categoría
+      </Text>
+
       <Text style={styles.paragraph}>Atributos</Text>
       <Text onPress={handleUpdateScreen} style={styles.paragraph}>
         Producto
@@ -95,14 +98,17 @@ export default function Display(props) {
       <Divider width={30} />
       {ir && (
         <Text onPress={storeAS} style={styles.paragraph}>
-          Store to AS
+          Download Data
         </Text>
       )}
       <Text onPress={displayFromAS} style={styles.paragraph}>
-        Get from AS
+        Refresh
       </Text>
-      <Text onPress={displayFromApi} style={styles.paragraph}>
+      {/* <Text onPress={displayFromApi} style={styles.paragraph}>
         Get from API
+      </Text> */}
+      <Text onPress={clearCache} style={styles.paragraph}>
+        Clear Cache
       </Text>
       <Divider width={30} />
       <Text onPress={setDarkBg} style={styles.paragraph}>
@@ -119,12 +125,12 @@ export default function Display(props) {
         drawerPosition={"left"}
         renderNavigationView={navigationView}
       >
-        {modalVisible &&
-        <ModalFilters 
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}        
-        />
-        }
+        {modalVisible && (
+          <ModalFilters
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+        )}
         {filteredProds && (
           <FlatList
             data={filteredProds}
