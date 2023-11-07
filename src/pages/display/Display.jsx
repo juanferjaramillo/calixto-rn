@@ -6,7 +6,7 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import Layout from "../../components/layout/Layout";
+import Layout from "./Layout";
 import Card from "../../components/card/Card";
 import { Divider } from "@rneui/themed";
 import { useStore } from "../../globalStore/useStore";
@@ -35,11 +35,6 @@ export default function Display(props) {
     displayFromAS();
   }, []);
 
-  const handleUpdateScreen = () => {
-    drawer.current.closeDrawer();
-    setLightBg();
-  };
-
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
     drawer.current.closeDrawer();
@@ -58,14 +53,6 @@ export default function Display(props) {
     const prod = await cache.getAll();
     setFilteredProds(prod);
   }
-
-  // async function displayFromApi() {
-  //   console.log("from API");
-  //   drawer.current.closeDrawer();
-  //   //Brings info from Api and displays the cards.
-  //   const prod = await getProducts(1);
-  //   setFilteredProds(prod.slice(1,10));
-  // }
 
   async function clearCache() {
     drawer.current.closeDrawer();
@@ -92,8 +79,8 @@ export default function Display(props) {
       </Text>
 
       <Text style={styles.paragraph}>Atributos</Text>
-      <Text onPress={handleUpdateScreen} style={styles.paragraph}>
-        Producto
+      <Text style={styles.paragraph}>
+        Canales
       </Text>
       <Divider width={30} />
       {ir && (
@@ -104,9 +91,6 @@ export default function Display(props) {
       <Text onPress={displayFromAS} style={styles.paragraph}>
         Refresh
       </Text>
-      {/* <Text onPress={displayFromApi} style={styles.paragraph}>
-        Get from API
-      </Text> */}
       <Text onPress={clearCache} style={styles.paragraph}>
         Clear Cache
       </Text>
@@ -116,6 +100,7 @@ export default function Display(props) {
       </Text>
     </View>
   );
+
   //-------------------RENDER------------------------------
   return (
     <Layout>
@@ -131,6 +116,15 @@ export default function Display(props) {
             setModalVisible={setModalVisible}
           />
         )}
+        <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+        >
         {filteredProds && (
           <FlatList
             data={filteredProds}
@@ -146,8 +140,8 @@ export default function Display(props) {
             onEndReachedThreshold={0.2}
           />
         )}
+        </View>
 
-        {/* scrollview */}
       </DrawerLayoutAndroid>
     </Layout>
   );
@@ -156,7 +150,7 @@ export default function Display(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "flex-start",
     padding: 16,
   },

@@ -27,8 +27,8 @@ export default function Layout(props) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        // height: "50%",
       }}
     >
       <View
@@ -38,7 +38,7 @@ export default function Layout(props) {
           flexDirection: "row",
           justifyContent: "flex-start",
           alignItems: "center",
-          height: 40,
+          height: "6%",
           width: "100vw",
           // backgroundColor: "purple",
         }}
@@ -85,26 +85,40 @@ export default function Layout(props) {
               paddingLeft: 1,
               backgroundColor: onlinecolor,
               borderRadius: 50,
+              marginRight:5
             }}
           >
-            <Text>.</Text>
           </View>
         </View>
       </View>
 
       <View
-        //lower container
+        //lower container (drawer + cards)
         style={{
-          display: "flex",
-          flexDirection: "column",
-          // justifyContent: "center",
-          // alignItems: "center",
           width: "100%",
-          height: 680,
+          height: "88%",
           backgroundColor: color,
         }}
       >
         {props.children}
+      </View>
+      <View
+      //lower menu bar
+      style={{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-around",
+        backgroundColor: "darkorange",
+        width: "100%",
+        height: "6%",
+        color:"white"
+      }}
+      >
+        <Text style={{ color: "white", fontSize: 20, }}>1</Text>
+        <Text style={{ color: "white", fontSize: 20,  }}>2</Text>
+        <Text style={{ color: "white", fontSize: 20,}}>3</Text>
+        <Text style={{ color: "white", fontSize: 20,  }}>4</Text>
+        <Text style={{ color: "white", fontSize: 20,  }}>5</Text>
       </View>
     </View>
   );
