@@ -3,6 +3,7 @@ import { Badge } from "@rneui/themed";
 import { useState } from "react";
 import shtemmaLogo from "../../../assets/sthemma.jpg";
 import CardFront from "./cardFront";
+import CardBack from "./cardBack";
 
 //===============COMPONENT=================
 
@@ -38,12 +39,12 @@ export default function Card(props) {
     estado={props.estado}
   />
   {/* <CardBack
-    onClick={() => handleClick()}
+    handleTouch={handleTouch}
     ind={props.ind}
     prodUrl={props.prodUrl}
     descripcion={props.descripcion}
     icons={props.icons}
-    Barras={props.Barras}
+    barras={props.Barras}
     existencia={props.existencia}
   /> */}
   </>
