@@ -23,10 +23,11 @@ export default function Card(props) {
     // }
   };
 
+  // console.log("producto: ",props);
   //-------------------- render -------------------------
   return (
     <>
-    <CardFront
+    {/* <CardFront
     // handleAddToCart={handleAddToCart}
     handleTouch={handleTouch}
     precio_base={props.precio_base}
@@ -37,16 +38,17 @@ export default function Card(props) {
     nombre={props.nombre}
     categoria={props.categoria}
     estado={props.estado}
-  />
-  {/* <CardBack
+  />*/}
+  <CardBack
     handleTouch={handleTouch}
     ind={props.ind}
     prodUrl={props.prodUrl}
     descripcion={props.descripcion}
     icons={props.icons}
-    barras={props.Barras}
+    barras={props.barras}
     existencia={props.existencia}
-  /> */}
+
+  /> 
   </>
   );
 }

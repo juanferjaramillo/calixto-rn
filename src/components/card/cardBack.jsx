@@ -1,19 +1,28 @@
-import { View, Text, Image, Divider } from "react-native";
+import { View, Text, Image } from "react-native";
 
+//==================COMPONENT====================
 export default function CardBack(props) {
   const { ind, handleTouch, barras, existencia, descripcion, prodUrl, icons } =
     props;
 
+    // console.log("icons", icons);
+  //--------------------render-----------------------
+
   return (
     <View
+      //card container
       style={{
-        margin: 1,
-        width: "320px",
-        height: "530px",
-        boxShadow: 8,
-        borderRadius: 2,
-        onPress: { handleTouch },
+        alignItems: "center",
+        width: 300,
+        height: 400,
+        backgroundColor: "white",
+        marginTop: 5,
+        borderRadius: 10,
+        shadowOffset: 10,
+        shadowOpacity: 50,
+        shadowColor: "#ffffff",
       }}
+      onTouchEnd={handleTouch}
     >
       <View
         style={{
@@ -27,53 +36,68 @@ export default function CardBack(props) {
       >
         <Text>{`Codigo: ${barras}`}</Text>
         <Text>{existencia}</Text>
-        <View
-          style={{ height: "230px" }}
-          //   boxShadow={4}
-        >
-          <Text style={{ fontSize: 13, textAlign: "justify" }}>
-            {descripcion}
-          </Text>
-        </View>
+      </View>
 
-        <Image
-          source={{ uri: props.prodUrl }}
-          resizeMode="contain"
-          style={{
-            // objectFit: "contain"
-            height: "150vh",
-            width: "240vh",
-            // alt:"producto"
-            // border="1"
-          }}
-        />
+      {/* <Badge
+          status="success" //success, error, primary, warning
+          // style={{backgroundColor: "#ff0000"}}
+          containerStyle={{ position: "absolute", top: 0, left: 200 }}
+        /> */}
 
-        <View
+      <View
+        style={{ height: "230px",
+      height:170
+      }}
+        //   boxShadow={4}
+      >
+        <Text style={{ fontSize: 9, textAlign: "justify", marginTop: 10 }}>
+          {descripcion}
+        </Text>
+      </View>
+
+      <Image
+        source={{
+          uri: prodUrl,
+        }}
+        // source={{ uri: prodUrl }}
+        resizeMode="contain"
+        style={{
+          width: "90%",
+          height: "35%",
+          // marginBottom:25,
+          // marginTop: 25,
+        }}
+      />
+
+      {/* <View style={{ width: "90%", }}>
+        <Text style={{ textAlign:"center", fontWeight:"bold" }}>{props.nombre.trim()}</Text>
+      </View> */}
+      <View
           style={{
             display: "flex",
+            flexDirection:"row",
             justifyContent: "center",
             marginTop: 1,
           }}
         >
-          {icons?.map((icon, i) => {
+     {icons?.map((icon, i) => {
             const iconUrl = icon.iconUrl;
             return (
               <Image
-              source={{ uri: iconUrl }}
+                source={{ uri: iconUrl }}
+                resizeMode="contain"
                 style={{
-                  key: { i },
-                //   alt: "icon",
                   width: 40,
-                  height: 40,
+                  height: 30,
                   marginRight: 0.5,
                   marginLeft: 0.5,
                 }}
               />
             );
           })}
-        </View>
-      </View>
-    </View>
 
+     </View>
+     
+     </View>
   );
 }

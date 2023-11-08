@@ -134,6 +134,10 @@ export default function Display(props) {
                 id={item.id}
                 prodUrl={item.prodUrl}
                 nombre={item.nombre}
+                barras={item.codigoBarras}
+                descripcion={item.descripcion}
+                existencia={item.existencia}
+                icons={item.icons}
               />
             )}
             keyExtractor={(item) => item.id}
