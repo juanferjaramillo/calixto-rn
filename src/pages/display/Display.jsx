@@ -70,6 +70,11 @@ export default function Display(props) {
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
+     
+        <Text onPress={displayFromAS} style={styles.botonLike}>
+          Todos
+        </Text>
+  
       <Text style={styles.paragraph}>Proveedor</Text>
 
       <Text style={styles.paragraph}>Disponibilidad</Text>
@@ -79,24 +84,19 @@ export default function Display(props) {
       </Text>
 
       <Text style={styles.paragraph}>Atributos</Text>
-      <Text style={styles.paragraph}>
-        Canales
-      </Text>
+      <Text style={styles.paragraph}>Canales</Text>
       <Divider width={30} />
       {ir && (
         <Text onPress={storeAS} style={styles.paragraph}>
           Download Data
         </Text>
       )}
-      <Text onPress={displayFromAS} style={styles.paragraph}>
-        Refresh
-      </Text>
       <Text onPress={clearCache} style={styles.paragraph}>
         Clear Cache
       </Text>
       <Divider width={30} />
-      <Text onPress={setDarkBg} style={styles.paragraph}>
-        Salir
+      <Text onPress={setDarkBg} style={styles.botonLike}>
+        Logout
       </Text>
     </View>
   );
@@ -117,35 +117,37 @@ export default function Display(props) {
           />
         )}
         <View
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
         >
-        {filteredProds && (
-          <FlatList
-            data={filteredProds}
-            renderItem={({ item }) => (
-              <Card
-                key={item.id}
-                id={item.id}
-                prodUrl={item.prodUrl}
-                nombre={item.nombre}
-                barras={item.codigoBarras}
-                descripcion={item.descripcion}
-                existencia={item.existencia}
-                icons={item.icons}
-              />
-            )}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.2}
-          />
-        )}
+          {filteredProds && (
+            <FlatList
+              data={filteredProds}
+              renderItem={({ item }) => (
+                <Card
+                  key={item.id}
+                  id={item.id}
+                  prodUrl={item.prodUrl}
+                  nombre={item.nombre}
+                  barras={item.codigoBarras}
+                  descripcion={item.descripcion}
+                  existencia={item.existencia}
+                  icons={item.icons}
+                  precio_base={item.precioBase}
+                  iva={item.tax?.tax}
+                  categoria={item.category?.name}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              onEndReachedThreshold={0.2}
+            />
+          )}
         </View>
-
       </DrawerLayoutAndroid>
     </Layout>
   );
@@ -165,6 +167,19 @@ const styles = StyleSheet.create({
     padding: 16,
     fontSize: 15,
     textAlign: "center",
+    borderBottomWidth: 1,
+    borderColor: "lightgrey",
+    width: "100%",
+  },
+  botonLike: {
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    fontSize: 15,
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: "red",
+    borderRadius: 15,
+    width: "80%",
   },
   prodImage: {
     width: 50,

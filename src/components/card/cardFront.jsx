@@ -6,10 +6,18 @@ import shtemmaLogo from "../../../assets/sthemma.jpg";
 //===============COMPONENT=================
 
 export default function CardFront(props) {
+  const { ind, handleTouch, prodUrl, 
+    id, nombre, barras, existencia,
+  precio_base, iva, categoria } = props;
 
-    const handleCardTouchEnd = () => {
-        props.handleTouch();
-    }
+  let PB = Number(precio_base).toFixed();
+  let PT = ((1 + Number(iva) / 100) * Number(PB)).toFixed();
+  PB = PB.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  PT = PT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  const handleCardTouchEnd = () => {
+    handleTouch();
+  };
 
   //-------------------- render -------------------------
   return (
@@ -27,37 +35,57 @@ export default function CardFront(props) {
         shadowColor: "#ffffff",
       }}
       onTouchEnd={handleCardTouchEnd}
+      key={ind}
     >
-      <View style={{ width: 250,  }}>
-        <Text style={{ textAlign: "center",  }}>{props.id}</Text>
+      <View style={{ width: 250 }}>
+        <Text style={{ textAlign: "center" }}>{id}</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ textAlign: "left", fontSize: 11 }}>{barras}</Text>
+          <Text style={{ textAlign: "right", fontSize: 11 }}>{existencia}</Text>
+        </View>
+        <Text style={{ fontWeight: "100", textAlign: "center" }}>
+          ___________________________
+        </Text>
       </View>
 
- {/* <Badge
+      {/* <Badge
           status="success" //success, error, primary, warning
           // style={{backgroundColor: "#ff0000"}}
           containerStyle={{ position: "absolute", top: 0, left: 200 }}
         /> */}
 
       <Image
-        source={{ uri: props.prodUrl }}
+        source={{ uri: prodUrl }}
         resizeMode="contain"
-        style={{ 
-          width: "90%",
-          height: "45%",
-          marginBottom:25,
-          marginTop: 25,
+        style={{
+          width: "80%",
+          height: "40%",
+          marginBottom: 15,
+          marginTop: 5,
         }}
       />
 
-      <View style={{ width: "90%", }}>
-        <Text style={{ textAlign:"center", fontWeight:"bold" }}>{props.nombre.trim()}</Text>
+      <View style={{ width: "90%" }}>
+        <Text style={{ textAlign: "center", fontWeight: "bold" }}>
+          {nombre.trim()}
+        </Text>
       </View>
-      <Text style={{fontWeight:"100"}}>___________________________</Text>
+      <Text style={{ fontWeight: "100" }}>___________________________</Text>
 
-      <Text style={{fontSize:13, marginBottom:5}}>{`Precio sin IVA: $ 2000`}</Text>
-        <Text style={{fontSize:13, marginBottom:10}}>{`Precio con IVA: $ 2200`}</Text>
-        <Text style={{fontSize:13}}>{`SNACKS`}</Text>
-
+      <Text
+        style={{ fontSize: 13, marginBottom: 5 }}
+      >{`Precio sin IVA: $ ${PB}`}</Text>
+      <Text
+        style={{ fontSize: 13, marginBottom: 10 }}
+      >{`Precio con IVA: $ ${PT}`}</Text>
+      <Text style={{ fontSize: 13, textAlign:"center" }}>{`${categoria.trim()}`}</Text>
     </View>
   );
 }

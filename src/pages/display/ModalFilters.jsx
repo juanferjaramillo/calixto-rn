@@ -14,26 +14,20 @@ const ModalFilters = (props) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>FILTRO DE PRODUCTOS</Text>
-            {/* combo box */}
-            <ScrollView>
-                <Text>Cat 1</Text>
-                <Text>Cat 2</Text>
-                <Text>Cat 3</Text>
-                <Text>Cat 4</Text>
-                <Text>Cat 5</Text>
-                <Text>Cat 6</Text>
-                <Text>Cat 7</Text>
-                <Text>Cat 8</Text>
-                <Text>Cat 9</Text>
-                <Text>Cat 10</Text>
+           
+            <ScrollView style={{minWidth: "70%", marginBottom:15}}>
+                <Text style={styles.modalOptions}>Cat 1</Text>
+                <Text style={styles.modalOptions}>Cat 2</Text>
+                <Text style={styles.modalOptions}>Cat 3</Text>
+                <Text style={styles.modalOptions}>Cat 4</Text>
+                <Text style={styles.modalOptions}>Cat 5</Text>
+                <Text style={styles.modalOptions}>Cat 6</Text>
+                <Text style={styles.modalOptions}>Cat 7</Text>
+                <Text style={styles.modalOptions}>Cat 8</Text>
+                <Text style={styles.modalOptions}>Cat 9</Text>
+                <Text style={styles.modalOptions}>Cat 10</Text>
             </ScrollView>
             <View style={styles.buttonView}>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => props.setModalVisible(!props.modalVisible)}
-            >
-              <Text style={styles.textStyle}>Filtrar</Text>
-            </Pressable>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => props.setModalVisible(!props.modalVisible)}
@@ -99,6 +93,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+  modalOptions: {
+    borderBottomWidth: 1, 
+    marginBottom:5,
+    textAlign:"center"
+  }
 });
 
 export default ModalFilters;

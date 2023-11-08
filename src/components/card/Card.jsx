@@ -12,7 +12,6 @@ export default function Card(props) {
 
   const handleTouch = async () => {
     setFlipped(!flipped);
-    console.log("touched");
     // if (!flipped) {
     //   const stat = {
     //     location: "unknown",
@@ -23,11 +22,11 @@ export default function Card(props) {
     // }
   };
 
-  // console.log("producto: ",props);
   //-------------------- render -------------------------
   return (
     <>
-    {/* <CardFront
+    {!flipped ? 
+    <CardFront
     // handleAddToCart={handleAddToCart}
     handleTouch={handleTouch}
     precio_base={props.precio_base}
@@ -38,7 +37,10 @@ export default function Card(props) {
     nombre={props.nombre}
     categoria={props.categoria}
     estado={props.estado}
-  />*/}
+    barras={props.barras}
+    existencia={props.existencia}
+  />
+  :
   <CardBack
     handleTouch={handleTouch}
     ind={props.ind}
@@ -47,8 +49,8 @@ export default function Card(props) {
     icons={props.icons}
     barras={props.barras}
     existencia={props.existencia}
-
   /> 
+    }
   </>
   );
 }
