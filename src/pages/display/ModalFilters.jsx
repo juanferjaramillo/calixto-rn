@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     height: "50%",
-    // width:280,
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
@@ -75,7 +74,8 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 20,
-    padding: 10,
+    paddingHorizontal: 25,
+    paddingVertical:3,
     elevation: 2,
   },
   buttonOpen: {

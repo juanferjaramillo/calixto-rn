@@ -114,16 +114,17 @@ export default function Display(props) {
           />
         )}
         <View
+        //card container
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
             alignItems: "center",
             width: "100%",
           }}
         >
           {filteredProds && (
             <FlatList
+            alignItems="center"
+            // numColumns={2}
+            style={{width:"100%",}}
               data={filteredProds}
               renderItem={({ item }) => (
                 <Card

@@ -38,139 +38,148 @@ export default function Layout(props) {
   //----------------------- render --------------------------
   return (
     <>
-    <View
-      //page container
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        // height: "97%",
-      }}
-    >
       <View
-        //App bar (upper container)
+        //whole page container
         style={{
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: "column",
           alignItems: "center",
-          height: "6%",
-          backgroundColor: "darkorange",
+          justifyContent: "center",
           width: "100%",
-          // backgroundColor: "purple",
+          // height: "97%",
         }}
       >
         <View
-          //logo
-          style={{ width: "20%", backgroundColor: "white" }}
-        >
-          <Image
-            source={{
-              uri: "https://res.cloudinary.com/sthemma/calixto/logosProveedores/sfgroup.png",
-            }}
-            style={{ width: "100%", height: "100%" }}
-            resizeMode="contain"
-          />
-        </View>
-
-        <Text 
-        style={{color:"white"}}>CALIXTO</Text>
-        <View
-          //online indicator
+          //App bar (upper container)
           style={{
+            display: "flex",
             flexDirection: "row",
+            justifyContent: "space-between",
             alignItems: "center",
-            justifyContent: "center",
-            width: 15,
-            height: 15,
-            paddingLeft: 1,
-            backgroundColor: onlinecolor,
-            borderRadius: 50,
-            marginRight: 5,
+            height: "6%",
+            minHeight:30,
+            backgroundColor: "darkorange",
+            width: "100%",
+            // backgroundColor: "purple",
           }}
-        ></View>
-      </View>
-
-      <View
-        //lower container (drawer + cards)
-        style={{
-          width: "100%",
-          height: "94%",
-          // height: "91.2%",
-          backgroundColor: color,
-        }}
-      >
-        {props.children}
-      </View>
-    
-
-      {searching && (
-        <View
-          //lower search bar
-          height="6%"
-          width="100%"
-          justifyContent="center"
-          position="absolute"
-          top="88%"
-          style={{ borderWidth: 1, borderColor: "lightgrey", backgroundColor:"white" }}
         >
-          <TextInput
-            placeholder="Búsqueda"
-            onChangeText={(txt) => setSearchText(txt)}
-            value={searchText}
-            returnKeyType="search"
-            onSubmitEditing={(e) => handleSearch(searchText, e)}
-            autoFocus={true}
-            style={{ height: 30, marginRight: 3, minWidth: 100 }}
+          <View
+            //logo
+            style={{ width: "20%", backgroundColor: "white" }}
+          >
+            <Image
+              source={{
+                uri: "https://res.cloudinary.com/sthemma/calixto/logosProveedores/sfgroup.png",
+              }}
+              style={{ width: "100%", height: "100%" }}
+              resizeMode="contain"
+            />
+          </View>
+
+          <Text style={{ color: "white" }}>CALIXTO</Text>
+          <View
+            //online indicator
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 15,
+              height: 15,
+              paddingLeft: 1,
+              backgroundColor: onlinecolor,
+              borderRadius: 50,
+              marginRight: 5,
+            }}
+          ></View>
+        </View>
+
+        <View
+          //lower container (drawer + cards)
+          display="flex"
+          flexDirection="row"
+          justifyContent="center"
+          style={{
+            width: "100%",
+            height: "94%",
+            // height: "91.2%",
+            backgroundColor: color,
+          }}
+        >
+          {props.children}
+        </View>
+
+        {searching && (
+          <View
+            //lower search bar
+            height="6%"
+            width="100%"
+            justifyContent="center"
+            position="absolute"
+            top="88%"
+            style={{
+              borderWidth: 1,
+              borderColor: "lightgrey",
+              backgroundColor: "white",
+            }}
+          >
+            <TextInput
+              placeholder="Búsqueda"
+              onChangeText={(txt) => setSearchText(txt)}
+              value={searchText}
+              returnKeyType="search"
+              onSubmitEditing={(e) => handleSearch(searchText, e)}
+              autoFocus={true}
+              style={{ height: 30, marginRight: 3, 
+                // minWidth: 100
+               }}
+            />
+          </View>
+        )}
+
+        <View
+          //lower menu bar
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+            backgroundColor: "darkorange",
+            width: "100%",
+            height: "6%",
+            minHeight:30,
+            color: "white",
+            position: "absolute",
+            top: "94%",
+          }}
+        >
+          <Feather
+            name="search"
+            size={24}
+            color="white"
+            onPress={() => setSearching(!searching)}
+            // onPress={() => handleSearch(searchText)}
+          />
+          <Text
+            onPress={displayFromAS}
+            style={{
+              color: "white",
+              fontSize: 12,
+              borderWidth: 1,
+              borderRadius: 5,
+              borderColor: "white",
+              padding: 5,
+            }}
+          >
+            TODOS
+          </Text>
+          <MaterialIcons
+            name="logout"
+            size={24}
+            color="white"
+            onPress={() => handleSearch(searchText)}
           />
         </View>
-      )}
-      
-      <View
-        //lower menu bar
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          alignItems: "center",
-          backgroundColor: "darkorange",
-          width: "100%",
-          height: "6%",
-          color: "white",
-          position: "absolute",
-          top:"94%"
-        }}
-      >
-        <Feather
-          name="search"
-          size={24}
-          color="white"
-          onPress={() => setSearching(!searching)}
-          // onPress={() => handleSearch(searchText)}
-        />
-        <Text
-          onPress={displayFromAS}
-          style={{
-            color: "white",
-            fontSize: 12,
-            borderWidth: 1,
-            borderRadius: 5,
-            borderColor: "white",
-            padding: 5,
-          }}
-        >
-          TODOS
-        </Text>
-        <MaterialIcons
-          name="logout"
-          size={24}
-          color="white"
-          onPress={() => handleSearch(searchText)}
-        />
       </View>
-      </View>
-      </>
+    </>
   );
 }
