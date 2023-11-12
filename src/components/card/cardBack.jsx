@@ -23,23 +23,13 @@ export default function CardBack(props) {
       onTouchEnd={handleTouch}
       key={ind}
     >
-      {/* <View
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-around",
-          height: "500px",
-          //    cursor: "pointer",
-        }}
-      >
-        <Text>{`Codigo: ${barras}`}</Text>
-        <Text>{existencia}</Text>
-      </View> */}
-
       <View
-        style={{ height: "230px", height: 170 }}
-        //   boxShadow={4}
+        style={{
+          height: "230px",
+          height: 170,
+          borderBottomWidth: 4,
+          borderColor: "lightgrey",
+        }}
       >
         <Text
           style={{

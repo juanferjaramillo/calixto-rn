@@ -39,17 +39,7 @@ export default function CardFront(props) {
     >
       <View style={{ width: 250 }}>
         <Text style={{ textAlign: "center" }}>{id}</Text>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ textAlign: "left", fontSize: 11 }}>{barras}</Text>
-          <Text style={{ textAlign: "right", fontSize: 11 }}>{existencia}</Text>
-        </View>
+
         <Text style={{ fontWeight: "100", textAlign: "center" }}>
           ___________________________
         </Text>
@@ -67,7 +57,7 @@ export default function CardFront(props) {
         style={{
           width: "80%",
           height: "40%",
-          marginBottom: 15,
+          marginBottom: 10,
           marginTop: 5,
         }}
       />
@@ -86,6 +76,20 @@ export default function CardFront(props) {
         style={{ fontSize: 13, marginBottom: 10 }}
       >{`Precio con IVA: $ ${PT}`}</Text>
       <Text style={{ fontSize: 13, textAlign:"center" }}>{`${categoria.trim()}`}</Text>
+     
+      <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+            width:"100%",
+            marginTop:5
+          }}
+        >
+          <Text style={{ textAlign: "left", fontSize: 11 }}>{barras}</Text>
+          <Text style={{ textAlign: "right", fontSize: 11 }}>{existencia}</Text>
+        </View>
     </View>
   );
 }

@@ -71,9 +71,9 @@ export default function Display(props) {
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
      
-        <Text onPress={displayFromAS} style={styles.botonLike}>
+        {/* <Text onPress={displayFromAS} style={styles.botonLike}>
           Todos
-        </Text>
+        </Text> */}
   
       <Text style={styles.paragraph}>Proveedor</Text>
 
@@ -95,9 +95,6 @@ export default function Display(props) {
         Clear Cache
       </Text>
       <Divider width={30} />
-      <Text onPress={setDarkBg} style={styles.botonLike}>
-        Logout
-      </Text>
     </View>
   );
 
