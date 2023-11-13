@@ -1,44 +1,42 @@
-import { Alert, Modal, StyleSheet, Text, Pressable, View, ScrollView } from "react-native";
+import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
+
+//================COMPONENT=====================
 const ModalFilters = (props) => {
+  let title = "";
+  switch (props.filter) {
+    case "proveedor":
+      title = "FILTRO DE PROVEEDOR";
+      break;
+    case "disponibilidad":
+      title = "FILTRO DE DISPONIBILIDAD";
+      break;
+    case "categoria":
+      title = "FILTRO DE CATEGORÍAS";
+      break;
+  }
+
+  //-------------------render------------------
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={props.modalVisible}
-        onRequestClose={() => {
-          props.setModalVisible(!props.modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>FILTRO DE PRODUCTOS</Text>
-           
-            <ScrollView style={{minWidth: "70%", marginBottom:15}}>
-                <Text style={styles.modalOptions}>Cat 1</Text>
-                <Text style={styles.modalOptions}>Cat 2</Text>
-                <Text style={styles.modalOptions}>Cat 3</Text>
-                <Text style={styles.modalOptions}>Cat 4</Text>
-                <Text style={styles.modalOptions}>Cat 5</Text>
-                <Text style={styles.modalOptions}>Cat 6</Text>
-                <Text style={styles.modalOptions}>Cat 7</Text>
-                <Text style={styles.modalOptions}>Cat 8</Text>
-                <Text style={styles.modalOptions}>Cat 9</Text>
-                <Text style={styles.modalOptions}>Cat 10</Text>
-            </ScrollView>
-            <View style={styles.buttonView}>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => props.setModalVisible(!props.modalVisible)}
-            >
-              <Text style={styles.textStyle}>Cerrar</Text>
-            </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={props.modalVisible}
+      onRequestClose={() => {
+        props.setModalVisible(!props.modalVisible);
+      }}
+    >
+      <View style={styles.lowerView}>
+        <Text style={styles.modalText}>{title}</Text>
+        <View style={styles.modalView}>{props.children}</View>
+        <Pressable
+          style={[styles.button, styles.buttonClose]}
+          onPress={() => props.setModalVisible(!props.modalVisible)}
+        >
+          <Text style={styles.textStyle}>Cerrar</Text>
+        </Pressable>
+      </View>
+    </Modal>
   );
 };
 
@@ -48,16 +46,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
+    backgroundColor: "red",
+  },
+  lowerView: {
+    position: "relative",
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    top: "30%",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    // height:"50%",
+    backgroundColor: "darkorange",
+    zIndex: 5,
   },
   modalView: {
     display: "flex",
     flexDirection: "column",
     height: "50%",
-    margin: 20,
+    marginTop: 20,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
+    justifyContent: "flex-start",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -68,15 +80,16 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonView: {
-    display:"flex",
-    flexDirection:"row",
+    display: "flex",
+    flexDirection: "row",
     justifyContent: "space-between",
   },
   button: {
     borderRadius: 20,
     paddingHorizontal: 25,
-    paddingVertical:3,
+    paddingVertical: 3,
     elevation: 2,
+    marginTop: 20,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -90,14 +103,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 10,
+    fontSize: 16,
+    color: "white",
     textAlign: "center",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   modalOptions: {
-    borderBottomWidth: 1, 
-    marginBottom:5,
-    textAlign:"center"
-  }
+    borderBottomWidth: 1,
+    marginBottom: 5,
+    textAlign: "center",
+  },
 });
 
 export default ModalFilters;

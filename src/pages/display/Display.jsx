@@ -13,9 +13,12 @@ import { useStore } from "../../globalStore/useStore";
 import cache from "../../utility/cache";
 import { useEffect, useRef, useState } from "react";
 import getProducts from "../../hooks/getProducts";
-import { useNetInfo } from "@react-native-community/netinfo";
 import NetInfo from "@react-native-community/netinfo";
 import ModalFilters from "./ModalFilters";
+import { useWindowDimensions } from "react-native";
+import FilterCateg from "./FilterCateg";
+import FilterProve from "./FilterProve";
+import FilterDispon from "./FilterDispon";
 
 //==================COMPONENT========================
 export default function Display(props) {
@@ -25,7 +28,23 @@ export default function Display(props) {
   const prods = useStore((state) => state.prods);
   const [ir, setIr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [filter, setFilter] = useState("");
+
   const drawer = useRef(null);
+  let columns = 1;
+
+  const cellphone = 480; //max value
+  const tablet = 830; //max value
+
+  const { height, width } = useWindowDimensions();
+
+  if (width < cellphone) {
+    columns = 1;
+  } else if (width < tablet) {
+    columns = 2;
+  } else {
+    columns = 4;
+  }
 
   useEffect(() => {
     async function checkConex() {
@@ -44,6 +63,7 @@ export default function Display(props) {
       await cache.store(p.id, p);
       await Image.prefetch(p.prodUrl);
     });
+    await Image.prefetch(ICONOS)
     console.log("storingEnd");
   }
 
@@ -60,8 +80,19 @@ export default function Display(props) {
     console.log("cache cleared");
   }
 
+  const handleFProve = () => {
+    drawer.current.closeDrawer();
+    setFilter("proveedor");
+    setModalVisible(true);
+  };
+  const handleFDisp = () => {
+    drawer.current.closeDrawer();
+    setFilter("disponibilidad");
+    setModalVisible(true);
+  };
   const handleFCateg = () => {
     drawer.current.closeDrawer();
+    setFilter("categoria");
     setModalVisible(true);
   };
 
@@ -70,14 +101,17 @@ export default function Display(props) {
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
-     
-        {/* <Text onPress={displayFromAS} style={styles.botonLike}>
+      {/* <Text onPress={displayFromAS} style={styles.botonLike}>
           Todos
         </Text> */}
-  
-      <Text style={styles.paragraph}>Proveedor</Text>
 
-      <Text style={styles.paragraph}>Disponibilidad</Text>
+      <Text onPress={handleFProve} style={styles.paragraph}>
+        Proveedor
+      </Text>
+
+      <Text onPress={handleFDisp} style={styles.paragraph}>
+        Disponibilidad
+      </Text>
 
       <Text onPress={handleFCateg} style={styles.paragraph}>
         Categoría
@@ -111,20 +145,26 @@ export default function Display(props) {
           <ModalFilters
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
-          />
+            filter={filter}
+          >
+            {filter === "proveedor" && <FilterProve />}
+            {filter === "disponibilidad" && <FilterDispon />}
+            {filter === "categoria" && <FilterCateg />}
+          </ModalFilters>
         )}
         <View
-        //card container
+          //card container
           style={{
             alignItems: "center",
             width: "100%",
+            height: "94%",
           }}
         >
           {filteredProds && (
             <FlatList
-            alignItems="center"
-            // numColumns={2}
-            style={{width:"100%",}}
+              alignItems="center"
+              numColumns={columns}
+              style={{ width: "100%" }}
               data={filteredProds}
               renderItem={({ item }) => (
                 <Card
@@ -141,6 +181,7 @@ export default function Display(props) {
                   categoria={item.category?.name}
                 />
               )}
+              key={columns}
               keyExtractor={(item) => item.id}
               onEndReachedThreshold={0.2}
             />

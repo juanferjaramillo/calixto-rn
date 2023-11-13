@@ -24,7 +24,7 @@ export default function Card(props) {
 
   //-------------------- render -------------------------
   return (
-    <>
+    <View style={{margin:3}}>
     {!flipped ? 
     <CardFront
     // handleAddToCart={handleAddToCart}
@@ -51,6 +51,6 @@ export default function Card(props) {
     existencia={props.existencia}
   /> 
     }
-  </>
+  </View>
   );
 }

@@ -64,7 +64,7 @@ export default function CardFront(props) {
 
       <View style={{ width: "90%" }}>
         <Text style={{ textAlign: "center", fontWeight: "bold" }}>
-          {nombre.trim()}
+          {nombre?.trim()}
         </Text>
       </View>
       <Text style={{ fontWeight: "100" }}>___________________________</Text>
@@ -75,7 +75,7 @@ export default function CardFront(props) {
       <Text
         style={{ fontSize: 13, marginBottom: 10 }}
       >{`Precio con IVA: $ ${PT}`}</Text>
-      <Text style={{ fontSize: 13, textAlign:"center" }}>{`${categoria.trim()}`}</Text>
+      <Text style={{ fontSize: 13, textAlign:"center" }}>{`${categoria?.trim()}`}</Text>
      
       <View
           style={{
