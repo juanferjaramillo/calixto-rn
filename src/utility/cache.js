@@ -2,16 +2,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
-const prefix = "cache";
+const prefixProd = "prod";
+const prefixCateg = "categ";
 const expiryInMinutes = 1200;
 
-const store = async (key, value) => {
+const storeProd = async (key, value) => {
   try {
     const item = {
       value,
       timestamp: Date.now(),
     };
-    await AsyncStorage.setItem(prefix + key, JSON.stringify(value));
+    await AsyncStorage.setItem(prefixProd + key, JSON.stringify(value));
     // console.log("cacheStored", JSON.stringify(value));
   } catch (error) {
     console.log("error store", error);
@@ -26,14 +27,14 @@ const isExpired = (item) => {
 
 const get = async (key) => {
   try {
-    const value = await AsyncStorage.getItem(prefix + key);
+    const value = await AsyncStorage.getItem(prefixProd + key);
     // console.log("cacheGet", value);
     const item = JSON.parse(value);
 
     if (!item) return null;
 
     if (isExpired(item)) {
-      await AsyncStorage.removeItem(prefix + key);
+      await AsyncStorage.removeItem(prefixProd + key);
       return null;
     }
     return item;
@@ -52,7 +53,7 @@ const getAll = async () => {
     }
     if (!item) return null;
     // if (isExpired(item)) {
-    //   await AsyncStorage.removeItem(prefix + key);
+    //   await AsyncStorage.removeItem(prefixProd + key);
     //   return null;
     // }
     return item;
@@ -67,7 +68,7 @@ const clear = async () => {
 }
 
 export default {
-  store,
+  storeProd,
   get,
   getAll,
   clear,
