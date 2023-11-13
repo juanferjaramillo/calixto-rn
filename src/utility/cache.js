@@ -3,7 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
 const prefixProd = "prod";
-const prefixCateg = "categ";
+const prefixProv = "prov";
+const prefixCate = "cate";
 const expiryInMinutes = 1200;
 
 const storeProd = async (key, value) => {
@@ -15,17 +16,25 @@ const storeProd = async (key, value) => {
     await AsyncStorage.setItem(prefixProd + key, JSON.stringify(value));
     // console.log("cacheStored", JSON.stringify(value));
   } catch (error) {
-    console.log("error storing prods", error);
+    console.log("cache error storing prods", error);
   }
 };
 
-// const storeCateg = async (key, value) {
-//   try {
-//     await AsyncStorage.setItem(CATEGORIAS)
-//   } catch (error) {
-//     console.log("error storing categ", error);
-//   }
-// }
+const storeProv = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(prefixProv + key, JSON.stringify(value))
+  } catch (error) {
+    console.log("cache error storing proveedores", error);
+  }
+}
+
+const storeCateg = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(prefixCate + key, JSON.stringify(value))
+  } catch (error) {
+    console.log("cache error storing categ", error);
+  }
+}
 
 const isExpired = (item) => {
   const now = moment(Date.now());
@@ -51,23 +60,53 @@ const get = async (key) => {
   }
 };
 
-const getAll = async () => {
-  const item = [];
+// const getAll = async (prefix) => {
+//   const item = [];
+//   try {
+//     const keys = await AsyncStorage.getAllKeys();
+//     for (let i=0; i<keys.length; i++) {
+//       const it= JSON.parse(await AsyncStorage.getItem(keys[i]));
+//       item.push(it);
+//     }
+//     if (!item) return null;
+//     // if (isExpired(item)) {
+//     //   await AsyncStorage.removeItem(prefixProd + key);
+//     //   return null;
+//     // }
+//     return item;
+//   } catch (error) {
+  //     console.log(error);
+//     return [];
+//   }
+// };
+
+const getAll = async (prefix) => {
+  let prods = [];
+  let categ = [];
+
   try {
     const keys = await AsyncStorage.getAllKeys();
+    // console.log("allKeys", keys);
     for (let i=0; i<keys.length; i++) {
-      const it= JSON.parse(await AsyncStorage.getItem(keys[i]));
-      item.push(it);
+      let k = keys[i].slice(0,4);
+      console.log("k",k);
+      switch (k) {
+        case "prod":
+          prods.push(JSON.parse(await AsyncStorage.getItem(keys[i])));
+          case "cate":
+          categ.push(JSON.parse(await AsyncStorage.getItem(keys[i])));
+      } 
+      // prods.push(it);
     }
-    if (!item) return null;
-    // if (isExpired(item)) {
+    if (!prods) return null;
+    // if (isExpired(prods)) {
     //   await AsyncStorage.removeItem(prefixProd + key);
     //   return null;
     // }
-    return item;
+    return prods;
   } catch (error) {
-    return [];
     console.log(error);
+    return [];
   }
 };
 
@@ -77,6 +116,8 @@ const clear = async () => {
 
 export default {
   storeProd,
+  storeProv,
+  storeCateg,
   get,
   getAll,
   clear,
