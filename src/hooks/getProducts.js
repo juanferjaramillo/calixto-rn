@@ -5,16 +5,17 @@ import axios from "axios";
 export default async function getProducts(userId) {
   async function gp(id) {
     try {
-      produ = (await axios(`https://calixtosrv.up.railway.app/prodsuser/${id}`)).data;
-      // produ = (await axios(`http://192.168.1.10:3003/prodsuser/${id}`)).data;
-     produ = produ?.prodUser;
+      produ = (await axios(`https://calixtosrv.up.railway.app/prodsuser/${id}`))
+        .data;
+      // produ = produ?.prodUser;
+      // const {prodUser, prove, categ } = produ;
       return produ;
+      // return prodUser;
     } catch (error) {
-      return [];
       console.log(error.message);
+      return {};
     }
   }
-
   let products = await gp(userId);
   return products;
 }

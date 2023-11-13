@@ -15,9 +15,17 @@ const storeProd = async (key, value) => {
     await AsyncStorage.setItem(prefixProd + key, JSON.stringify(value));
     // console.log("cacheStored", JSON.stringify(value));
   } catch (error) {
-    console.log("error store", error);
+    console.log("error storing prods", error);
   }
 };
+
+// const storeCateg = async (key, value) {
+//   try {
+//     await AsyncStorage.setItem(CATEGORIAS)
+//   } catch (error) {
+//     console.log("error storing categ", error);
+//   }
+// }
 
 const isExpired = (item) => {
   const now = moment(Date.now());

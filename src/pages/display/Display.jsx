@@ -19,6 +19,7 @@ import { useWindowDimensions } from "react-native";
 import FilterCateg from "./FilterCateg";
 import FilterProve from "./FilterProve";
 import FilterDispon from "./FilterDispon";
+import { DialogLoading } from "@rneui/base/dist/Dialog/Dialog.Loading";
 
 //==================COMPONENT========================
 export default function Display(props) {
@@ -29,9 +30,11 @@ export default function Display(props) {
   const [ir, setIr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [filter, setFilter] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const drawer = useRef(null);
   let columns = 1;
+  const usrId = 1;
 
   const cellphone = 480; //max value
   const tablet = 830; //max value
@@ -57,13 +60,20 @@ export default function Display(props) {
   async function storeAS() {
     //Store products gotten from API into AsyncStorage
     drawer.current.closeDrawer();
-    // await cache.clear();
-    const products = await getProducts(1);
-    products.map(async (p) => {
-      await cache.store(p.id, p);
+    setLoading(true);
+    //fetch products from API:
+    // const products = await getProducts(usrId);
+    const {prodUser, prove, categ } = await getProducts(usrId);
+    console.log("Display67",categ);
+    
+    //stores products in AS:
+    // products.map(async (p) => {
+      prodUser.map(async (p) => {
+      await cache.storeProd(p.id, p);
       await Image.prefetch(p.prodUrl);
     });
-    await Image.prefetch(ICONOS)
+    setLoading(false);
+    // await Image.prefetch(ICONOS)
     console.log("storingEnd");
   }
 
@@ -135,6 +145,7 @@ export default function Display(props) {
   //-------------------RENDER------------------------------
   return (
     <Layout>
+      {loading &&  <DialogLoading />}
       <DrawerLayoutAndroid
         ref={drawer}
         drawerWidth={200}
