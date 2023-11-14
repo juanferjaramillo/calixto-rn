@@ -176,7 +176,6 @@ export default function Layout(props) {
             name="logout"
             size={24}
             color="grey"
-            onPress={() => handleSearch(searchText)}
           />
         </View>
       </View>

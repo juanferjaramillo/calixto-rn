@@ -17,11 +17,11 @@ export default function Display(props) {
   const [loading, setLoading] = useState(false);
   const [provs, setProvs] = useState([]);
   const [categs, setCategs] = useState([]);
+  const [newData, setNewData] = useState([]);
 
   const drawer = useRef(null);
   let columns = 1;
   const usrId = 1;
-
   const cellphone = 480; //max value
   const tablet = 830; //max value
 
@@ -42,33 +42,38 @@ export default function Display(props) {
     displayFromAS();
   }, []);
 
+  useEffect(() => {
+    setFilteredProds(newData);
+  }, [newData]);
+
   async function storeAS() {
     //Store info from API into AsyncStorage
     drawer.current.closeDrawer();
     setLoading(true);
     //fetch products from API:
     const { prodUser, prove, categ } = await getProducts(usrId);
-    
+
     // console.log("Display50", categ);
-    console.log("Display51", prove);
-    
+    // console.log("Display51", prove);
+
     //stores prove in cache.
-    prove.map(async (p,i) => {
+    prove.map(async (p, i) => {
       await cache.storeProv(i, p);
-    })
+    });
 
     //stores categ in cache.
-    categ.map(async (c,i)=>{
-      await cache.storeCateg(i,c);
-    })
+    categ.map(async (c, i) => {
+      await cache.storeCateg(i, c);
+    });
 
     //stores products in cache:
     prodUser.map(async (p) => {
       await cache.storeProd(p.id, p);
       await Image.prefetch(p.prodUrl);
     });
-  
+
     setLoading(false);
+    setNewData(prodUser);
     // await Image.prefetch(ICONOS)
     console.log("storingEnd");
   }
@@ -86,12 +91,12 @@ export default function Display(props) {
     console.log("cache cleared");
   }
 
-  async function handleFProve () {
-      drawer.current.closeDrawer();
-      setProvs(await cache.getAll("prov"));
-      setFilter("proveedor");
-      setModalVisible(true);
-  };
+  async function handleFProve() {
+    drawer.current.closeDrawer();
+    setProvs(await cache.getAll("prov"));
+    setFilter("proveedor");
+    setModalVisible(true);
+  }
 
   const handleFDisp = () => {
     drawer.current.closeDrawer();
@@ -99,12 +104,12 @@ export default function Display(props) {
     setModalVisible(true);
   };
 
-  async function handleFCateg () {
+  async function handleFCateg() {
     drawer.current.closeDrawer();
-    setCategs(await cache.getAll("cate"))
+    setCategs(await cache.getAll("cate"));
     setFilter("categoria");
     setModalVisible(true);
-  };
+  }
 
   let filteredProds = useStore((state) => state.filteredProds);
   //------------------Drawer contents----------------------
@@ -116,7 +121,6 @@ export default function Display(props) {
       storeAS={storeAS}
       clearCache={clearCache}
       ir={ir}
-
     />
   );
 
