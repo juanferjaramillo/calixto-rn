@@ -89,7 +89,7 @@ const getAll = async (prefix) => {
     // console.log("allKeys", keys);
     for (let i=0; i<keys.length; i++) {
       let k = keys[i].slice(0,4);
-      console.log("k",k);
+      // console.log("k",k);
       switch (k) {
         case "prod":
           prods.push(JSON.parse(await AsyncStorage.getItem(keys[i])));

@@ -1,7 +1,7 @@
 import { Image } from "react-native";
 import { useStore } from "../../globalStore/useStore";
 import cache from "../../utility/cache";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import getProducts from "../../hooks/getProducts";
 import NetInfo from "@react-native-community/netinfo";
 import { useWindowDimensions } from "react-native";
@@ -46,9 +46,9 @@ export default function Display(props) {
     setLoading(true);
     //fetch products from API:
     const { prodUser, prove, categ } = await getProducts(usrId);
-    
+    //GUARDAR AQUI PROVE Y CATEG EN AS.
     // console.log("Display50", categ);
-    // console.log("Display51", prove);
+    console.log("Display56", prove);
 
     //stores products in AS:
     prodUser.map(async (p) => {
@@ -107,6 +107,20 @@ export default function Display(props) {
     />
   );
 
+    const proveedores = [
+      "PROVE ONE",
+      "PROVE TWO",
+      "PROVE THREE",
+      "PROVE FOUR",
+      "PROVE FIVE",
+    ]
+    const categorias = [
+      "CATE ONE",
+      "CATE TWO",
+      "CATE THREE",
+      "CATE FOUR",
+      "CATE FIVE",
+    ]
   //-------------------RENDER------------------------------
   return (
     <DisplayContents
@@ -118,6 +132,8 @@ export default function Display(props) {
       filter={filter}
       filteredProds={filteredProds}
       columns={columns}
+      proveedores={proveedores}
+      categorias={categorias}
     />
   );
 }

@@ -9,6 +9,8 @@ import { DialogLoading } from "@rneui/base/dist/Dialog/Dialog.Loading";
 
 //================COMPONENT===================
 export default function DisplayContents(props) {
+  //Drawer, modal filters, card board
+
   //-------------------render-----------------
   return (
     <Layout>
@@ -17,7 +19,7 @@ export default function DisplayContents(props) {
         ref={props.drawer}
         drawerWidth={200}
         drawerPosition={"left"}
-        renderNavigationView={props.navigationView}
+        renderNavigationView={props.navigationView}  //<DrawerContents />
       >
         {props.modalVisible && (
           <ModalFilters
@@ -25,7 +27,11 @@ export default function DisplayContents(props) {
             setModalVisible={props.setModalVisible}
             filter={props.filter}
           >
-            {props.filter === "proveedor" && <FilterProve />}
+            {props.filter === "proveedor" &&
+            <FilterProve 
+            proveedores={props.proveedores}
+            setModalVisible={props.setModalVisible}
+            />}
             {props.filter === "disponibilidad" && <FilterDispon />}
             {props.filter === "categoria" && <FilterCateg />}
           </ModalFilters>
