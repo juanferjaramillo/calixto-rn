@@ -20,19 +20,19 @@ export default function Layout(props) {
     // console.log("e",e)
     setSearching(false);
 
-    console.log(`searching ${txt.toLowerCase()}`);
-    const prd = await cache.getAll();
-    let prd1 = prd.filter((p) =>
+    // console.log(`searching ${txt.toLowerCase()}`);
+    const prd = await cache.getAll("prod");
+    const prd1 = prd.filter((p) =>
       p.nombre.toLowerCase().includes(txt.toLowerCase())
     );
-    let prd2 = prd.filter((p) => p.id.toString() === txt);
+    const prd2 = prd.filter((p) => p.id.toString() === txt);
     setFilteredProds([...prd1, ...prd2]);
     setSearchText("");
   };
 
   async function displayFromAS() {
-    const prod = await cache.getAll();
-    setFilteredProds(prod);
+    const prods = await cache.getAll("prod");
+    setFilteredProds(prods);
   }
 
   //----------------------- render --------------------------
@@ -175,7 +175,7 @@ export default function Layout(props) {
           <MaterialIcons
             name="logout"
             size={24}
-            color="white"
+            color="grey"
             onPress={() => handleSearch(searchText)}
           />
         </View>

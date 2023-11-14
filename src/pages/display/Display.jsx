@@ -15,6 +15,8 @@ export default function Display(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(false);
+  const [provs, setProvs] = useState([]);
+  const [categs, setCategs] = useState([]);
 
   const drawer = useRef(null);
   let columns = 1;
@@ -46,29 +48,36 @@ export default function Display(props) {
     setLoading(true);
     //fetch products from API:
     const { prodUser, prove, categ } = await getProducts(usrId);
-    //GUARDAR AQUI PROVE Y CATEG EN AS.
+    
     // console.log("Display50", categ);
-    console.log("Display56", prove);
+    console.log("Display51", prove);
+    
+    //stores prove in cache.
+    prove.map(async (p,i) => {
+      await cache.storeProv(i, p);
+    })
 
-    //stores products in AS:
+    //stores categ in cache.
+    categ.map(async (c,i)=>{
+      await cache.storeCateg(i,c);
+    })
+
+    //stores products in cache:
     prodUser.map(async (p) => {
       await cache.storeProd(p.id, p);
       await Image.prefetch(p.prodUrl);
     });
-    //stores providers in AS:
-    prove.map(async (p, i) => {
-      await cache.storeProv(i, p);
-    })
+  
     setLoading(false);
     // await Image.prefetch(ICONOS)
     console.log("storingEnd");
   }
 
   async function displayFromAS() {
-    console.log("from AS");
+    console.log("display from AS");
     drawer.current.closeDrawer();
-    const prod = await cache.getAll("prod");
-    setFilteredProds(prod);
+    const prods = await cache.getAll("prod");
+    setFilteredProds(prods);
   }
 
   async function clearCache() {
@@ -77,18 +86,22 @@ export default function Display(props) {
     console.log("cache cleared");
   }
 
-  const handleFProve = () => {
-    drawer.current.closeDrawer();
-    setFilter("proveedor");
-    setModalVisible(true);
+  async function handleFProve () {
+      drawer.current.closeDrawer();
+      setProvs(await cache.getAll("prov"));
+      setFilter("proveedor");
+      setModalVisible(true);
   };
+
   const handleFDisp = () => {
     drawer.current.closeDrawer();
     setFilter("disponibilidad");
     setModalVisible(true);
   };
-  const handleFCateg = () => {
+
+  async function handleFCateg () {
     drawer.current.closeDrawer();
+    setCategs(await cache.getAll("cate"))
     setFilter("categoria");
     setModalVisible(true);
   };
@@ -107,20 +120,6 @@ export default function Display(props) {
     />
   );
 
-    const proveedores = [
-      "PROVE ONE",
-      "PROVE TWO",
-      "PROVE THREE",
-      "PROVE FOUR",
-      "PROVE FIVE",
-    ]
-    const categorias = [
-      "CATE ONE",
-      "CATE TWO",
-      "CATE THREE",
-      "CATE FOUR",
-      "CATE FIVE",
-    ]
   //-------------------RENDER------------------------------
   return (
     <DisplayContents
@@ -132,8 +131,8 @@ export default function Display(props) {
       filter={filter}
       filteredProds={filteredProds}
       columns={columns}
-      proveedores={proveedores}
-      categorias={categorias}
+      proveedores={provs}
+      categorias={categs}
     />
   );
 }

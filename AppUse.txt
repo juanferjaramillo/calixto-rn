@@ -4,15 +4,14 @@ Si está offline:
 - carga las tarjetas desde AsyncStorage
 
 Si esta online:
-- Habilitar boton de sync
-- Se bajan sus productos al Async Storage
-y las categorias y proveedores al zustand persistent
+- Habilitar boton de sync (download data)
+- Se bajan sus productos, categorias y proveedores al Async Storage
 - Habilita la opcion de menu de bajar las fotos e iconos
 que se sobreescriben si existen.
 
-Si se desloguea se borra el Async Storage pero se conservan las fotos.
 
 <Display /> tiene la logica del board y llama a
-<DisplayContents/> tiene el render del board
-<FilterProve /> tiene la lista de proveedores
+<DrawerContents /> y <DisplayContents/> que tiene el render del board, los modal y el Drawer 
+<DisplayContents/> llama a
+<FilterProve /> que tiene la lista de proveedores
 Trabajar aqui en handleFilter

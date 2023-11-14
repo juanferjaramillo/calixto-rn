@@ -1,11 +1,18 @@
 import { StyleSheet, Text, ScrollView, Pressable } from "react-native";
+import cache from '../../utility/cache'
+import { useStore } from "../../globalStore/useStore";
 
+//=================COMPONENT==================
 export default function FilterProve(props) {
   const { proveedores } = props;
-  // console.log("prov1",proveedores);
+  const setFilteredProds = useStore((state) => state.setFilteredProds);
 
-  const handleFilter = (p) => {
-    console.log(p);
+  const handleFilter = async (prv) => {
+    const prd = await cache.getAll("prod");
+    const prd1 = prd.filter((p) =>
+      p.provider.name.toLowerCase().includes(prv.toLowerCase())
+    );
+    setFilteredProds(prd1)
     props.setModalVisible(false);
 
   }
@@ -31,6 +38,6 @@ const styles = StyleSheet.create({
     // backgroundColor:"orange",
     paddingVertical:10,
     borderBottomWidth: 1,
-    textAlign: "center",
+    textAlign: "left",
   },
 });

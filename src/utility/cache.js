@@ -1,4 +1,3 @@
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 
@@ -22,19 +21,19 @@ const storeProd = async (key, value) => {
 
 const storeProv = async (key, value) => {
   try {
-    await AsyncStorage.setItem(prefixProv + key, JSON.stringify(value))
+    await AsyncStorage.setItem(prefixProv + key, JSON.stringify(value));
   } catch (error) {
     console.log("cache error storing proveedores", error);
   }
-}
+};
 
 const storeCateg = async (key, value) => {
   try {
-    await AsyncStorage.setItem(prefixCate + key, JSON.stringify(value))
+    await AsyncStorage.setItem(prefixCate + key, JSON.stringify(value));
   } catch (error) {
     console.log("cache error storing categ", error);
   }
-}
+};
 
 const isExpired = (item) => {
   const now = moment(Date.now());
@@ -75,35 +74,31 @@ const get = async (key) => {
 //     // }
 //     return item;
 //   } catch (error) {
-  //     console.log(error);
+//     console.log(error);
 //     return [];
 //   }
 // };
 
 const getAll = async (prefix) => {
-  let prods = [];
-  let categ = [];
+  let got = [];
 
   try {
     const keys = await AsyncStorage.getAllKeys();
     // console.log("allKeys", keys);
-    for (let i=0; i<keys.length; i++) {
-      let k = keys[i].slice(0,4);
+    for (let i = 0; i < keys.length; i++) {
+      let k = keys[i].slice(0, 4);
       // console.log("k",k);
-      switch (k) {
-        case "prod":
-          prods.push(JSON.parse(await AsyncStorage.getItem(keys[i])));
-          case "cate":
-          categ.push(JSON.parse(await AsyncStorage.getItem(keys[i])));
-      } 
-      // prods.push(it);
+      if (k===prefix) {
+        got.push(JSON.parse(await AsyncStorage.getItem(keys[i])));
+      }
     }
-    if (!prods) return null;
+    if (!got) return null;
     // if (isExpired(prods)) {
     //   await AsyncStorage.removeItem(prefixProd + key);
     //   return null;
     // }
-    return prods;
+    // return prods;
+    return got;
   } catch (error) {
     console.log(error);
     return [];
@@ -111,8 +106,8 @@ const getAll = async (prefix) => {
 };
 
 const clear = async () => {
-    await AsyncStorage.clear()
-}
+  await AsyncStorage.clear();
+};
 
 export default {
   storeProd,

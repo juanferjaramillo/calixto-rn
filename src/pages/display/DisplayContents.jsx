@@ -19,7 +19,7 @@ export default function DisplayContents(props) {
         ref={props.drawer}
         drawerWidth={200}
         drawerPosition={"left"}
-        renderNavigationView={props.navigationView}  //<DrawerContents />
+        renderNavigationView={props.navigationView} //<DrawerContents />
       >
         {props.modalVisible && (
           <ModalFilters
@@ -27,13 +27,19 @@ export default function DisplayContents(props) {
             setModalVisible={props.setModalVisible}
             filter={props.filter}
           >
-            {props.filter === "proveedor" &&
-            <FilterProve 
-            proveedores={props.proveedores}
-            setModalVisible={props.setModalVisible}
-            />}
+            {props.filter === "proveedor" && (
+              <FilterProve
+                proveedores={props.proveedores}
+                setModalVisible={props.setModalVisible}
+              />
+            )}
+            {props.filter === "categoria" && (
+            <FilterCateg
+              categorias = {props.categorias}
+              setModalVisible={props.setModalVisible}
+            />
+          )}
             {props.filter === "disponibilidad" && <FilterDispon />}
-            {props.filter === "categoria" && <FilterCateg />}
           </ModalFilters>
         )}
         <View
