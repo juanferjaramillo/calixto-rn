@@ -72,7 +72,7 @@ export default function DrawerContents(props) {
           Atributos
           </Text>
 
-        <Text onPress={props.handleFChan} style={styles.paragraphDisabled}>
+        <Text onPress={props.handleFChan} style={styles.paragraph}>
           Canales
           </Text>
 

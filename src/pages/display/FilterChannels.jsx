@@ -2,19 +2,46 @@ import { StyleSheet, Text, ScrollView, Pressable } from "react-native";
 import cache from "../../utility/cache";
 import { useStore } from "../../globalStore/useStore";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { useState } from "react";
 
 //==================COMPONENT==================
 export default function FilterChannels(props) {
-  const { categorias } = props;
   const setFilteredProds = useStore((state) => state.setFilteredProds);
 
-  const handleFilter = async (cat) => {
+  const [fBCh, setFBCh] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const styles = StyleSheet.create({
+    modalOptions: {
+      paddingVertical: 10,
+      borderBottomWidth: 1,
+      textAlign: "left",
+    },
+  });
+
+  const handleFilter = async (i) => {
+    let checked = fBCh;
+    checked[i] = !checked[i];
+    setFBCh(checked);
+    console.log(fBCh);
+    let chan = [];
+    for (let i = 0; i < checked.length; i++) {
+      checked[i] && chan.push(i + 1);
+    }
     const prd = await cache.getAll("prod");
-    const prd1 = prd.filter((p) =>
-      p.category?.name.toLowerCase().includes(cat.toLowerCase())
-    );
-    setFilteredProds(prd1);
-    props.setModalVisible(false);
+
+    const fp = prd.filter((p) => {
+      const icId = p.channels.map((i) => i.id);
+      return chan.every((s) => icId.includes(s));
+    });
+    setFilteredProds(fp);
   };
 
   const canales = [
@@ -30,22 +57,19 @@ export default function FilterChannels(props) {
   return (
     <ScrollView style={{ minWidth: "70%" }}>
       {canales?.map((c, i) => (
-        <BouncyCheckbox 
-        key={i}
-        fillColor="black" 
-        text={c?.trim()}
-        // onPress={() => handleFilter(c)}
-        style={{paddingVertical:5}}
+        <BouncyCheckbox
+          key={i}
+          fillColor="black"
+          text={c?.trim()}
+          textStyle={{
+            textDecorationLine: "none",
+          }}
+          // disableBuiltInState = {true}
+          // isChecked={fBCh[i]}
+          onPress={() => handleFilter(i)}
+          style={{ paddingVertical: 5 }}
         />
       ))}
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  modalOptions: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    textAlign: "left",
-  },
-});

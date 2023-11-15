@@ -16,7 +16,7 @@ import FilterChannels from "./FilterChannels";
 //================COMPONENT===================
 export default function DisplayContents(props) {
   //Drawer, modal filters, card board
-
+  console.log(props.filteredProds.length);
   //-------------------render-----------------
   return (
     <Layout>
