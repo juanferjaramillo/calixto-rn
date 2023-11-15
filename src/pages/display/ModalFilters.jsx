@@ -13,6 +13,9 @@ const ModalFilters = (props) => {
     case "categoria":
       title = "FILTRO DE CATEGORÍAS";
       break;
+    case "canales":
+      title = "FILTRO DE CANALES";
+      break;
   }
 
   //-------------------render------------------
@@ -36,7 +39,7 @@ const ModalFilters = (props) => {
           style={[styles.button, styles.buttonClose]}
           onPress={() => props.setModalVisible(!props.modalVisible)}
         >
-          <Text style={styles.textStyle}>Cancelar</Text>
+          <Text style={styles.textStyle}>Cerrar</Text>
         </Pressable>
       </View>
     </Modal>

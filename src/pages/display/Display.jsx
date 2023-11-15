@@ -53,9 +53,6 @@ export default function Display(props) {
     //fetch products from API:
     const { prodUser, prove, categ } = await getProducts(usrId);
 
-    // console.log("Display50", categ);
-    // console.log("Display51", prove);
-
     //stores prove in cache.
     prove.map(async (p, i) => {
       await cache.storeProv(i, p);
@@ -71,11 +68,11 @@ export default function Display(props) {
       await cache.storeProd(p.id, p);
       await Image.prefetch(p.prodUrl);
     });
-
-    setLoading(false);
-    setNewData(prodUser);
     // await Image.prefetch(ICONOS)
+
+    setNewData(prodUser);
     console.log("storingEnd");
+    setLoading(false);
   }
 
   async function displayFromAS() {
@@ -98,11 +95,11 @@ export default function Display(props) {
     setModalVisible(true);
   }
 
-  const handleFDisp = () => {
+  async function handleFDisp() {
     drawer.current.closeDrawer();
     setFilter("disponibilidad");
     setModalVisible(true);
-  };
+  }
 
   async function handleFCateg() {
     drawer.current.closeDrawer();
@@ -111,13 +108,22 @@ export default function Display(props) {
     setModalVisible(true);
   }
 
+  async function handleFChan() {
+    drawer.current.closeDrawer();
+    setCategs(await cache.getAll("chan"));
+    setFilter("canales");
+    setModalVisible(true);  
+  }
+
   let filteredProds = useStore((state) => state.filteredProds);
+
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <DrawerContents
       handleFProve={handleFProve}
       handleFDisp={handleFDisp}
       handleFCateg={handleFCateg}
+      handleFChan={handleFChan}
       storeAS={storeAS}
       clearCache={clearCache}
       ir={ir}

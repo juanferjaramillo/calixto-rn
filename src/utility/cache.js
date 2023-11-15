@@ -59,26 +59,6 @@ const get = async (key) => {
   }
 };
 
-// const getAll = async (prefix) => {
-//   const item = [];
-//   try {
-//     const keys = await AsyncStorage.getAllKeys();
-//     for (let i=0; i<keys.length; i++) {
-//       const it= JSON.parse(await AsyncStorage.getItem(keys[i]));
-//       item.push(it);
-//     }
-//     if (!item) return null;
-//     // if (isExpired(item)) {
-//     //   await AsyncStorage.removeItem(prefixProd + key);
-//     //   return null;
-//     // }
-//     return item;
-//   } catch (error) {
-//     console.log(error);
-//     return [];
-//   }
-// };
-
 const getAll = async (prefix) => {
   let got = [];
 

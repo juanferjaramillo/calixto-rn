@@ -1,33 +1,42 @@
 import { StyleSheet, Text, ScrollView, Pressable } from "react-native";
 import cache from "../../utility/cache";
 import { useStore } from "../../globalStore/useStore";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 //==================COMPONENT==================
-export default function FilterCateg(props) {
+export default function FilterChannels(props) {
   const { categorias } = props;
   const setFilteredProds = useStore((state) => state.setFilteredProds);
-  const filteredProds = useStore((state)=>state.filteredProds);
 
   const handleFilter = async (cat) => {
-    // const prd = await cache.getAll("prod");
-    const prd1 = filteredProds.filter((p) =>
+    const prd = await cache.getAll("prod");
+    const prd1 = prd.filter((p) =>
       p.category?.name.toLowerCase().includes(cat.toLowerCase())
     );
     setFilteredProds(prd1);
     props.setModalVisible(false);
   };
 
+  const canales = [
+    "Saludable",
+    "Autoservicio",
+    "Gym",
+    "CafesCow",
+    "Horeca",
+    "LicoStores",
+    "Educación",
+  ];
   //------------------render-------------------
   return (
     <ScrollView style={{ minWidth: "70%" }}>
-      {categorias?.map((c, i) => (
-        <Pressable 
-        key={i} 
-        onPress={() => handleFilter(c)}>
-          <Text key={i} style={styles.modalOptions}>
-            {c?.trim()}
-          </Text>
-        </Pressable>
+      {canales?.map((c, i) => (
+        <BouncyCheckbox 
+        key={i}
+        fillColor="black" 
+        text={c?.trim()}
+        // onPress={() => handleFilter(c)}
+        style={{paddingVertical:5}}
+        />
       ))}
     </ScrollView>
   );
@@ -35,7 +44,6 @@ export default function FilterCateg(props) {
 
 const styles = StyleSheet.create({
   modalOptions: {
-    // backgroundColor:"orange",
     paddingVertical: 10,
     borderBottomWidth: 1,
     textAlign: "left",

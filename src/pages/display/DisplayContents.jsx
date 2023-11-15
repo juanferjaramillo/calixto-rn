@@ -1,11 +1,17 @@
-import { DrawerLayoutAndroid, View, FlatList } from "react-native";
+import {
+  DrawerLayoutAndroid,
+  View,
+  FlatList,
+  ActivityIndicator,
+  Modal,
+} from "react-native";
 import Layout from "./Layout";
 import Card from "../../components/card/Card";
 import ModalFilters from "./ModalFilters";
 import FilterCateg from "./FilterCateg";
 import FilterProve from "./FilterProve";
 import FilterDispon from "./FilterDispon";
-import { DialogLoading } from "@rneui/base/dist/Dialog/Dialog.Loading";
+import FilterChannels from "./FilterChannels";
 
 //================COMPONENT===================
 export default function DisplayContents(props) {
@@ -14,19 +20,30 @@ export default function DisplayContents(props) {
   //-------------------render-----------------
   return (
     <Layout>
-      {props.loading && <DialogLoading />}
       <DrawerLayoutAndroid
         ref={props.drawer}
         drawerWidth={200}
         drawerPosition={"left"}
         renderNavigationView={props.navigationView} //<DrawerContents />
       >
+        {/* -------------Modals */}
+        {props.loading && (
+          <Modal transparent={true} style={{ marginTop: 100 }}>
+            <ActivityIndicator
+              size="large"
+              color="orange"
+              style={{ marginTop: 300 }}
+            />
+          </Modal>
+        )}
+
         {props.modalVisible && (
           <ModalFilters
             modalVisible={props.modalVisible}
             setModalVisible={props.setModalVisible}
             filter={props.filter}
           >
+            {/* ------------Filter Contents */}
             {props.filter === "proveedor" && (
               <FilterProve
                 proveedores={props.proveedores}
@@ -34,12 +51,15 @@ export default function DisplayContents(props) {
               />
             )}
             {props.filter === "categoria" && (
-            <FilterCateg
-              categorias = {props.categorias}
-              setModalVisible={props.setModalVisible}
-            />
-          )}
+              <FilterCateg
+                categorias={props.categorias}
+                setModalVisible={props.setModalVisible}
+              />
+            )}
             {props.filter === "disponibilidad" && <FilterDispon />}
+            {props.filter === "canales" && <FilterChannels
+            setModalVisible={props.setModalVisible}
+            />}
           </ModalFilters>
         )}
         <View

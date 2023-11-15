@@ -25,7 +25,7 @@ export default function FilterProve(props) {
         key={i}
         onPress={()=>handleFilter(p)}>
         <Text key={i} style={styles.modalOptions}>
-          {p}
+          {p?.trim()}
         </Text>
         </Pressable>
       ))}

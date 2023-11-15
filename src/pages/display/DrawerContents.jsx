@@ -5,7 +5,7 @@ import { Divider } from "@rneui/themed";
 export default function DrawerContents(props) {
   const styles = StyleSheet.create({
     containerTop: {
-      flex: 1,
+      // flex: 1,
       alignItems: "flex-start",
       justifyContent: "flex-start",
       padding: 20,
@@ -13,7 +13,7 @@ export default function DrawerContents(props) {
       backgroundColor: "lightblue",
     },
     containerBottom: {
-      flex: 1,
+      // flex: 1,
       alignItems: "flex-start",
       justifyContent: "flex-start",
       padding: 20,
@@ -23,7 +23,7 @@ export default function DrawerContents(props) {
     paragraph: {
       padding: 10,
       fontSize: 15,
-      textAlign: "center",
+      textAlign: "left",
       borderBottomWidth: 1,
       borderColor: "grey",
       width: "100%",
@@ -32,7 +32,7 @@ export default function DrawerContents(props) {
       padding: 10,
       fontSize: 15,
       color: "grey",
-      textAlign: "center",
+      textAlign: "left",
       borderBottomWidth: 1,
       borderColor: "grey",
       width: "100%",
@@ -46,17 +46,37 @@ export default function DrawerContents(props) {
       borderBottomWidth: 1,
       borderColor: "grey",
     },
+    subTitle2: {
+      fontSize: 11,
+      width: "100%",
+      color: "darkblue",
+      textAlign: "left",
+      fontWeight: "bold",
+      borderBottomWidth: 1,
+      borderColor: "grey",
+      marginTop:20
+    },
   });
 
   //------------------render-------------
   return (
     <>
       <View style={styles.containerTop}>
-        <Text style={styles.subTitle}>FILTROS</Text>
+        <Text style={styles.subTitle}>FILTROS GENERALES</Text>
 
         <Text onPress={props.handleFProve} style={styles.paragraph}>
           Proveedor
         </Text>
+
+        <Text style={styles.paragraphDisabled}>
+          Atributos
+          </Text>
+
+        <Text onPress={props.handleFChan} style={styles.paragraphDisabled}>
+          Canales
+          </Text>
+
+          <Text style={styles.subTitle2} >FILTROS FINOS</Text>
 
         <Text 
         // onPress={props.handleFDisp} 
@@ -68,10 +88,11 @@ export default function DrawerContents(props) {
           Categoría
         </Text>
 
-        <Text style={styles.paragraphDisabled}>Atributos</Text>
-        <Text style={styles.paragraphDisabled}>Canales</Text>
-      </View>
+        <Text style={styles.paragraphDisabled}>
+          Propiedades
+          </Text>
 
+      </View>
       <View style={styles.containerBottom}>
         <Text style={styles.subTitle}>CACHE</Text>
 

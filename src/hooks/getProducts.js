@@ -7,8 +7,6 @@ export default async function getProducts(userId) {
     try {
       produ = (await axios(`https://calixtosrv.up.railway.app/prodsuser/${id}`))
         .data;
-      // produ = produ?.prodUser;
-      // const {prodUser, prove, categ } = produ;
       return produ;
       // return prodUser;
     } catch (error) {
