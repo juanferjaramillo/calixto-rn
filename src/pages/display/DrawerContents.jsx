@@ -68,7 +68,7 @@ export default function DrawerContents(props) {
           Proveedor
         </Text>
 
-        <Text onPress={props.handleFAttrib} style={styles.paragraphDisabled}>
+        <Text onPress={props.handleFAttrib} style={styles.paragraph}>
           Atributos
           </Text>
 
@@ -88,7 +88,7 @@ export default function DrawerContents(props) {
           Categoría
         </Text>
 
-        <Text style={styles.paragraphDisabled}>
+        <Text onPress={props.handleFProp} style={styles.paragraph}>
           Propiedades
           </Text>
 

@@ -19,7 +19,7 @@ const ModalFilters = (props) => {
     case "categoria":
       title = "FILTRO DE CATEGORÍAS";
       break;
-    case "categoria":
+    case "propiedades":
       title = "FILTRO DE PROPIEDADES";
       break;
   }

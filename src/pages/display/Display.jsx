@@ -122,16 +122,24 @@ export default function Display(props) {
     setModalVisible(true);  
   }
   
+  async function handleFProp() {
+    drawer.current.closeDrawer();
+    // setOptions(await cache.getAll("chan"));
+    setFilter("propiedades");
+    setModalVisible(true);  
+  }
+
   let filteredProds = useStore((state) => state.filteredProds);
 
   //------------------Drawer contents----------------------
   const navigationView = () => (
     <DrawerContents
       handleFProve={handleFProve}
-      handleFDisp={handleFDisp}
-      handleFCateg={handleFCateg}
       handleFAttrib={handleFAttrib}
       handleFChan={handleFChan}
+      handleFDisp={handleFDisp}
+      handleFCateg={handleFCateg}
+      handleFProp={handleFProp}
       storeAS={storeAS}
       clearCache={clearCache}
       ir={ir}

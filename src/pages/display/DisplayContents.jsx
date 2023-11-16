@@ -13,6 +13,7 @@ import FilterProve from "./FilterProve";
 import FilterDispon from "./FilterDispon";
 import FilterChannels from "./FilterChannels";
 import FilterAttributes from "./FilterAttrib";
+import FilterProperties from "./FilterProperties";
 
 //================COMPONENT===================
 export default function DisplayContents(props) {
@@ -58,6 +59,8 @@ export default function DisplayContents(props) {
               {props.filter === "canales" && <FilterChannels
               setModalVisible={props.setModalVisible}
               />}
+              
+              {props.filter === "disponibilidad" && <FilterDispon />}
 
             {props.filter === "categoria" && (
               <FilterCateg
@@ -66,7 +69,12 @@ export default function DisplayContents(props) {
               />
             )}
 
-            {props.filter === "disponibilidad" && <FilterDispon />}
+            {props.filter === "propiedades" && (
+              <FilterProperties
+              options={props.options}
+                setModalVisible={props.setModalVisible}
+              />
+            )}
           </ModalFilters>
         )}
 

@@ -5,9 +5,10 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 
 //==================COMPONENT==================
-export default function FilterAttributes(props) {
+export default function FilterProperties(props) {
   const { options } = props;
   const setFilteredProds = useStore((state) => state.setFilteredProds);
+  const filteredProds = useStore((state) => state.filteredProds);
 
   const [fAt, setFAt] = useState([
     false,
@@ -35,9 +36,9 @@ export default function FilterAttributes(props) {
     for (let i = 0; i < checked.length; i++) {
       checked[i] && Attr.push(i + 1);
     }
-    const prd = await cache.getAll("prod");
+    // const prd = await cache.getAll("prod");
 
-    const fp = prd.filter((p) => {
+    const fp = filteredProds.filter((p) => {
       const icId = p.icons.map((i) => i.id);
       return Attr.every((s) => icId.includes(s));
     });

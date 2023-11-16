@@ -14,3 +14,7 @@ que se sobreescriben si existen.
 <DrawerContents /> y <DisplayContents/> que tiene el render del board, los modal y el Drawer 
 <DisplayContents/> llama a
 <FilterProve /> que tiene la lista de proveedores
+
+<DisplayContents /> selecciona que contenido mostrar en el modal ppara el filtro
+y llama a <ModalFilters /> pasandole un child con el componente a renderizar y
+la lista de opciones de filtro.
