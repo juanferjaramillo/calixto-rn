@@ -6,6 +6,8 @@ import {
 
 export default function FilterDispon(props) {
 
+  const { options } = props;
+  
     return (
   <ScrollView style={{ minWidth: "70%" }}>
     <Text style={styles.modalOptions}>Disp 1</Text>

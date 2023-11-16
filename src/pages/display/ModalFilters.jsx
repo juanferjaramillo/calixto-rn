@@ -7,14 +7,20 @@ const ModalFilters = (props) => {
     case "proveedor":
       title = "FILTRO DE PROVEEDOR";
       break;
+    case "atributos":
+      title = "FILTRO DE ATRIBUTOS";
+      break;
+    case "canales":
+      title = "FILTRO DE CANALES";
+      break;
     case "disponibilidad":
       title = "FILTRO DE DISPONIBILIDAD";
       break;
     case "categoria":
       title = "FILTRO DE CATEGORÍAS";
       break;
-    case "canales":
-      title = "FILTRO DE CANALES";
+    case "categoria":
+      title = "FILTRO DE PROPIEDADES";
       break;
   }
 

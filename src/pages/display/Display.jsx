@@ -16,7 +16,7 @@ export default function Display(props) {
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [provs, setProvs] = useState([]);
-  const [categs, setCategs] = useState([]);
+  const [options, setOptions] = useState([]);
   const [newData, setNewData] = useState([]);
 
   const drawer = useRef(null);
@@ -90,7 +90,7 @@ export default function Display(props) {
 
   async function handleFProve() {
     drawer.current.closeDrawer();
-    setProvs(await cache.getAll("prov"));
+    setOptions(await cache.getAll("prov"));
     setFilter("proveedor");
     setModalVisible(true);
   }
@@ -103,18 +103,25 @@ export default function Display(props) {
 
   async function handleFCateg() {
     drawer.current.closeDrawer();
-    setCategs(await cache.getAll("cate"));
+    setOptions(await cache.getAll("cate"));
     setFilter("categoria");
     setModalVisible(true);
   }
 
   async function handleFChan() {
     drawer.current.closeDrawer();
-    setCategs(await cache.getAll("chan"));
+    setOptions(await cache.getAll("chan"));
     setFilter("canales");
     setModalVisible(true);  
   }
-
+  
+  async function handleFAttrib() {
+    drawer.current.closeDrawer();
+    // setOptions(await cache.getAll("chan"));
+    setFilter("atributos");
+    setModalVisible(true);  
+  }
+  
   let filteredProds = useStore((state) => state.filteredProds);
 
   //------------------Drawer contents----------------------
@@ -123,6 +130,7 @@ export default function Display(props) {
       handleFProve={handleFProve}
       handleFDisp={handleFDisp}
       handleFCateg={handleFCateg}
+      handleFAttrib={handleFAttrib}
       handleFChan={handleFChan}
       storeAS={storeAS}
       clearCache={clearCache}
@@ -141,8 +149,7 @@ export default function Display(props) {
       filter={filter}
       filteredProds={filteredProds}
       columns={columns}
-      proveedores={provs}
-      categorias={categs}
+      options={options}
     />
   );
 }

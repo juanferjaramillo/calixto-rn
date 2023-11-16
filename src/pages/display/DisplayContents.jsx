@@ -12,11 +12,12 @@ import FilterCateg from "./FilterCateg";
 import FilterProve from "./FilterProve";
 import FilterDispon from "./FilterDispon";
 import FilterChannels from "./FilterChannels";
+import FilterAttributes from "./FilterAttrib";
 
 //================COMPONENT===================
 export default function DisplayContents(props) {
   //Drawer, modal filters, card board
-  console.log(props.filteredProds.length);
+  console.log("DispCont-Displayed Prods:",props.filteredProds.length);
   //-------------------render-----------------
   return (
     <Layout>
@@ -46,22 +47,29 @@ export default function DisplayContents(props) {
             {/* ------------Filter Contents */}
             {props.filter === "proveedor" && (
               <FilterProve
-                proveedores={props.proveedores}
+                options={props.options}
                 setModalVisible={props.setModalVisible}
               />
-            )}
+              )}
+              {props.filter === "atributos" && <FilterAttributes
+              options={props.options}
+              setModalVisible={props.setModalVisible}
+              />}
+              {props.filter === "canales" && <FilterChannels
+              setModalVisible={props.setModalVisible}
+              />}
+
             {props.filter === "categoria" && (
               <FilterCateg
-                categorias={props.categorias}
+              options={props.options}
                 setModalVisible={props.setModalVisible}
               />
             )}
+
             {props.filter === "disponibilidad" && <FilterDispon />}
-            {props.filter === "canales" && <FilterChannels
-            setModalVisible={props.setModalVisible}
-            />}
           </ModalFilters>
         )}
+
         <View
           //card container
           style={{

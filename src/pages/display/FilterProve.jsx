@@ -4,7 +4,7 @@ import { useStore } from "../../globalStore/useStore";
 
 //=================COMPONENT==================
 export default function FilterProve(props) {
-  const { proveedores } = props;
+  const { options } = props;
   const setFilteredProds = useStore((state) => state.setFilteredProds);
 
   const handleFilter = async (prv) => {
@@ -20,7 +20,7 @@ export default function FilterProve(props) {
   //---------------------render--------------------
   return (
     <ScrollView style={{ minWidth: "70%" }}>
-      {proveedores.map((p, i) => (
+      {options.map((p, i) => (
         <Pressable 
         key={i}
         onPress={()=>handleFilter(p)}>

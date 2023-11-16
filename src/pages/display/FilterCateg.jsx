@@ -4,7 +4,7 @@ import { useStore } from "../../globalStore/useStore";
 
 //==================COMPONENT==================
 export default function FilterCateg(props) {
-  const { categorias } = props;
+  const { options } = props;
   const setFilteredProds = useStore((state) => state.setFilteredProds);
   const filteredProds = useStore((state)=>state.filteredProds);
 
@@ -20,7 +20,7 @@ export default function FilterCateg(props) {
   //------------------render-------------------
   return (
     <ScrollView style={{ minWidth: "70%" }}>
-      {categorias?.map((c, i) => (
+      {options?.map((c, i) => (
         <Pressable 
         key={i} 
         onPress={() => handleFilter(c)}>

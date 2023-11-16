@@ -5,11 +5,11 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 
 //==================COMPONENT==================
-export default function FilterChannels(props) {
+export default function FilterAttributes(props) {
   const { options } = props;
   const setFilteredProds = useStore((state) => state.setFilteredProds);
 
-  const [fBCh, setFBCh] = useState([
+  const [fAt, setFAt] = useState([
     false,
     false,
     false,
@@ -28,36 +28,36 @@ export default function FilterChannels(props) {
   });
 
   const handleFilter = async (i) => {
-    let checked = fBCh;
+    let checked = fAt;
     checked[i] = !checked[i];
-    setFBCh(checked);
-    console.log(fBCh);
-    let chan = [];
+    setFAt(checked);
+    console.log(fAt);
+    let Attr = [];
     for (let i = 0; i < checked.length; i++) {
-      checked[i] && chan.push(i + 1);
+      checked[i] && Attr.push(i + 1);
     }
     const prd = await cache.getAll("prod");
 
     const fp = prd.filter((p) => {
-      const icId = p.channels.map((i) => i.id);
-      return chan.every((s) => icId.includes(s));
+      const icId = p.attributres.map((i) => i.id);
+      return Attr.every((s) => icId.includes(s));
     });
     setFilteredProds(fp);
   };
 
-  const canales = [
-    "Saludable",
-    "Autoservicio",
-    "Gym",
-    "CafesCow",
-    "Horeca",
-    "LicoStores",
-    "Educación",
+  const attributes = [
+    "Attr1",
+    "Attr2",
+    "Attr3",
+    "Attr4",
+    "Attr5",
+    "Attr6",
+    "Attr7",
   ];
   //------------------render-------------------
   return (
     <ScrollView style={{ minWidth: "70%" }}>
-      {options?.map((c, i) => (
+      {attributes?.map((c, i) => (
         <BouncyCheckbox
           key={i}
           fillColor="black"
@@ -67,7 +67,7 @@ export default function FilterChannels(props) {
           }}
           // disableBuiltInState = {true}
           // isChecked={fBCh[i]}
-          onPress={() => handleFilter(i)}
+          // onPress={() => handleFilter(i)}
           style={{ paddingVertical: 5 }}
         />
       ))}

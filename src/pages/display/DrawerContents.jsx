@@ -68,7 +68,7 @@ export default function DrawerContents(props) {
           Proveedor
         </Text>
 
-        <Text style={styles.paragraphDisabled}>
+        <Text onPress={props.handleFAttrib} style={styles.paragraphDisabled}>
           Atributos
           </Text>
 
