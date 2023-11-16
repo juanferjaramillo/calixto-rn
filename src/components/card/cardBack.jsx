@@ -26,8 +26,8 @@ export default function CardBack(props) {
       <View
         style={{
           height: "230px",
-          height: 170,
-          borderBottomWidth: 4,
+          height: 200,
+          borderBottomWidth: 2,
           borderColor: "lightgrey",
         }}
       >
@@ -35,8 +35,8 @@ export default function CardBack(props) {
           style={{
             fontSize: 9,
             textAlign: "justify",
-            marginTop: 10,
-            paddingHorizontal: 10,
+            marginTop: 5,
+            paddingHorizontal: 5,
           }}
         >
           {descripcion}
@@ -51,15 +51,11 @@ export default function CardBack(props) {
         resizeMode="contain"
         style={{
           width: "90%",
-          height: "30%",
-          marginBottom: 15,
-          marginTop: 15,
+          height: 100,
+          marginVertical: 12,
         }}
       />
 
-      {/* <View style={{ width: "90%", }}>
-        <Text style={{ textAlign:"center", fontWeight:"bold" }}>{props.nombre.trim()}</Text>
-      </View> */}
       <View
         style={{
           display: "flex",
