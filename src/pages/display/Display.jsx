@@ -1,4 +1,4 @@
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import { useStore } from "../../globalStore/useStore";
 import cache from "../../utility/cache";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -7,6 +7,7 @@ import NetInfo from "@react-native-community/netinfo";
 import { useWindowDimensions } from "react-native";
 import DrawerContents from "./DrawerContents";
 import DisplayContents from "./DisplayContents";
+import { StatusBar } from "expo-status-bar";
 
 //==================COMPONENT========================
 export default function Display(props) {
@@ -112,21 +113,21 @@ export default function Display(props) {
     drawer.current.closeDrawer();
     setOptions(await cache.getAll("chan"));
     setFilter("canales");
-    setModalVisible(true);  
+    setModalVisible(true);
   }
-  
+
   async function handleFAttrib() {
     drawer.current.closeDrawer();
     // setOptions(await cache.getAll("chan"));
     setFilter("atributos");
-    setModalVisible(true);  
+    setModalVisible(true);
   }
-  
+
   async function handleFProp() {
     drawer.current.closeDrawer();
     // setOptions(await cache.getAll("chan"));
     setFilter("propiedades");
-    setModalVisible(true);  
+    setModalVisible(true);
   }
 
   let filteredProds = useStore((state) => state.filteredProds);
@@ -148,16 +149,19 @@ export default function Display(props) {
 
   //-------------------RENDER------------------------------
   return (
-    <DisplayContents
-      loading={loading}
-      drawer={drawer}
-      navigationView={navigationView}
-      modalVisible={modalVisible}
-      setModalVisible={setModalVisible}
-      filter={filter}
-      filteredProds={filteredProds}
-      columns={columns}
-      options={options}
-    />
+    <View style={{ marginTop: 35 }}>
+      <StatusBar hidden={false} />
+      <DisplayContents
+        loading={loading}
+        drawer={drawer}
+        navigationView={navigationView}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        filter={filter}
+        filteredProds={filteredProds}
+        columns={columns}
+        options={options}
+      />
+    </View>
   );
 }

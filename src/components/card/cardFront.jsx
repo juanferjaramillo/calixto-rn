@@ -53,7 +53,7 @@ export default function CardFront(props) {
         <Divider style={{ marginTop: 10 }} />
         </View>
       <View
-            //online indicator
+            //badge
             style={{
               position:"absolute",
               top:10,
@@ -69,14 +69,6 @@ export default function CardFront(props) {
               marginRight: 5,
             }}
             />
-    
-
-
-      {/* <Badge
-          status="success" //success, error, primary, warning
-          // style={{backgroundColor: "#ff0000"}}
-          containerStyle={{ position: "absolute", top: 0, left: 200 }}
-        /> */}
 
       <Image
         source={{ uri: prodUrl }}
@@ -107,7 +99,6 @@ export default function CardFront(props) {
           style={{ fontSize: 13, textAlign: "center" }}
         >{`${categoria?.trim()}`}</Text>
 
-        {/* <Divider /> */}
       </View>
 
       <View
