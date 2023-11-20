@@ -19,8 +19,6 @@ export default function Layout(props) {
   const handleSearch = async (txt, e) => {
     // console.log("e",e)
     setSearching(false);
-
-    // console.log(`searching ${txt.toLowerCase()}`);
     const prd = await cache.getAll("prod");
     const prd1 = prd.filter((p) =>
       p.nombre.toLowerCase().includes(txt.toLowerCase())
@@ -30,6 +28,7 @@ export default function Layout(props) {
     setSearchText("");
   };
 
+  //=======================COMPONENT===========================
   async function displayFromAS() {
     const prods = await cache.getAll("prod");
     setFilteredProds(prods);
@@ -46,7 +45,6 @@ export default function Layout(props) {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          // height: "97%",
         }}
       >
         <View
@@ -57,10 +55,9 @@ export default function Layout(props) {
             justifyContent: "space-between",
             alignItems: "center",
             height: "6%",
-            minHeight:30,
+            minHeight: 30,
             backgroundColor: "darkorange",
             width: "100%",
-            // backgroundColor: "purple",
           }}
         >
           <View
@@ -129,9 +126,11 @@ export default function Layout(props) {
               returnKeyType="search"
               onSubmitEditing={(e) => handleSearch(searchText, e)}
               autoFocus={true}
-              style={{ height: 30, marginRight: 3, 
+              style={{
+                height: 30,
+                marginRight: 3,
                 // minWidth: 100
-               }}
+              }}
             />
           </View>
         )}
@@ -146,7 +145,7 @@ export default function Layout(props) {
             backgroundColor: "darkorange",
             width: "100%",
             height: "6%",
-            minHeight:30,
+            minHeight: 30,
             color: "white",
             position: "absolute",
             top: "94%",
@@ -172,11 +171,7 @@ export default function Layout(props) {
           >
             TODOS
           </Text>
-          <MaterialIcons
-            name="logout"
-            size={24}
-            color="grey"
-          />
+          <MaterialIcons name="logout" size={24} color="grey" />
         </View>
       </View>
     </>

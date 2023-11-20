@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ScrollView, Pressable } from "react-native";
+import { StyleSheet, ScrollView, } from "react-native";
 import cache from "../../utility/cache";
 import { useStore } from "../../globalStore/useStore";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -57,7 +57,7 @@ export default function FilterChannels(props) {
   //------------------render-------------------
   return (
     <ScrollView style={{ minWidth: "70%" }}>
-      {options?.map((c, i) => (
+      {canales?.map((c, i) => (
         <BouncyCheckbox
           key={i}
           fillColor="black"

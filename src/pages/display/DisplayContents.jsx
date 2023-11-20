@@ -18,7 +18,10 @@ import FilterProperties from "./FilterProperties";
 //================COMPONENT===================
 export default function DisplayContents(props) {
   //Drawer, modal filters, card board
-  console.log("DispCont-Displayed Prods:",props.filteredProds.length);
+
+  //how many products are in display:
+  // console.log("DispCont-Displayed Prods:",props.filteredProds.length);
+
   //-------------------render-----------------
   return (
     <Layout>

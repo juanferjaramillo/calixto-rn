@@ -1,7 +1,7 @@
 import { Image, View } from "react-native";
 import { useStore } from "../../globalStore/useStore";
 import cache from "../../utility/cache";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import getProducts from "../../hooks/getProducts";
 import NetInfo from "@react-native-community/netinfo";
 import { useWindowDimensions } from "react-native";
@@ -130,9 +130,6 @@ export default function Display(props) {
     setModalVisible(true);
   }
 
-  let filteredProds = useStore((state) => state.filteredProds);
-
-  //------------------Drawer contents----------------------
   const navigationView = () => (
     <DrawerContents
       handleFProve={handleFProve}
@@ -146,6 +143,8 @@ export default function Display(props) {
       ir={ir}
     />
   );
+
+  let filteredProds = useStore((state) => state.filteredProds);
 
   //-------------------RENDER------------------------------
   return (
