@@ -1,0 +1,2 @@
+-poner el usuario autenticado en el global store
+-Hacer la ruta de los axios que se pueda modificar globalmente

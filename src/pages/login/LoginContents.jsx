@@ -1,11 +1,17 @@
 import { Text, View, TextInput, Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Display from "../display/Display";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import cache from "../../utility/cache";
+import { useStore } from "../../globalStore/useStore";
 
 //=================COMPONENT==================
 export default function LoginContents() {
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(1);
+  //0: clave errada, 1:usuario no existe, 2:permitido
+  const [usr, setUsr] = useState([]);
+
+  const setUserLogin = useStore((state) => state.setUserLogin);
 
   const {
     control,
@@ -18,21 +24,53 @@ export default function LoginContents() {
     },
   });
 
-  const onSubmit = () => {
-    console.log("submitted");
-    setAuth(true);
+  useEffect(() => {
+    async function gu() {
+      const users = await cache.getAll("user");
+      setUsr(users);
+      //users is an array of objects. {id, name, ownerId password, isActive}
+    }
+    gu();
+  }, []);
+
+  const onSubmit = (data) => {
+    // console.log("data", data.identificacion, data.clave);
+    // console.log("u;",usr.length);
+    for (let i = 0; i < usr.length; i++) {
+      if (
+        usr[i].id.toString().trim() === data.identificacion.toString().trim()
+      ) {
+        console.log("user found");
+        setAuth(0);
+        if (usr[i].password.toString() === data.clave.toString()) {
+          console.log("LoginContents 36 -ingreso permitido");
+          setUserLogin(data.identificacion.toString().trim());
+          setAuth(2);
+        } else {
+          // console.log("Clave errada");
+          setAuth(0);
+        }
+        i = usr.length;
+      } else {
+        setAuth(1);
+      }
+    }
+    if (auth === 0) {
+      console.log("clave errada");
+    }
+    if (auth === 1) {
+      console.log("usuario no encontrado");
+    }
   };
 
   //----------------------render--------------------
   return (
     <View
       style={{
-        height: "100%",
-        marginTop: 40,
         backgroundColor: "lightblue",
       }}
     >
-      {auth ? (
+      {auth === 2 ? (
         <Display />
       ) : (
         <View
@@ -40,12 +78,13 @@ export default function LoginContents() {
           style={{
             display: "flex",
             alignItems: "center",
+            height: "100%",
           }}
         >
           <Text
             style={{
               fontSize: 20,
-              marginTop: 50,
+              marginTop: 90,
             }}
           >
             Bienvenido a Calixto
@@ -100,7 +139,6 @@ export default function LoginContents() {
                   color={"black"}
                   marginTop={20}
                   marginBottom={20}
-                  
                 />
               )}
               name="clave"

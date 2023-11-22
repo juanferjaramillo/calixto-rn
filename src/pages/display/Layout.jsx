@@ -31,12 +31,13 @@ export default function Layout(props) {
   //=======================COMPONENT===========================
   async function displayFromAS() {
     const prods = await cache.getAll("prod");
+    // const users = await cache.getAll("user")
+    // console.log("layout36",users);
     setFilteredProds(prods);
   }
 
   //----------------------- render --------------------------
   return (
-    <>
       <View
         //whole page container
         style={{
@@ -45,6 +46,7 @@ export default function Layout(props) {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
+          marginTop:0,
         }}
       >
         <View
@@ -94,11 +96,10 @@ export default function Layout(props) {
           //lower container (drawer + cards)
           display="flex"
           flexDirection="row"
-          justifyContent="center"
+          justifyContent="flex-start"
           style={{
             width: "100%",
             height: "94%",
-            // height: "91.2%",
             backgroundColor: color,
           }}
         >
@@ -174,6 +175,6 @@ export default function Layout(props) {
           <MaterialIcons name="logout" size={24} color="grey" />
         </View>
       </View>
-    </>
+
   );
 }

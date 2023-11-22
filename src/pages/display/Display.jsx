@@ -23,7 +23,9 @@ export default function Display(props) {
 
   const drawer = useRef(null);
   let columns = 1;
-  const usrId = 1;
+  //------------------------------------------------
+  const usrId = useStore((state)=>state.userAuth);
+  //------------------------------------------------
   const cellphone = 480; //max value
   const tablet = 830; //max value
 
@@ -74,8 +76,8 @@ export default function Display(props) {
     // await Image.prefetch(ICONOS)
 
     //stores users in cache (to allow login when offline)
-    await getUsers();
-    
+    const allUsers = await getUsers();
+    allUsers?.map(async (usr, i) => await cache.storeUsers(i, usr));
 
     setNewData(prodUser);
     console.log("storingEnd");
