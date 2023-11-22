@@ -1,10 +1,6 @@
 import { View, Text, Image } from "react-native";
 import { Divider } from "@rneui/themed";
 
-import { Badge } from "@rneui/themed";
-import { useState } from "react";
-import shtemmaLogo from "../../../assets/sthemma.jpg";
-
 //===============COMPONENT=================
 
 export default function CardFront(props) {

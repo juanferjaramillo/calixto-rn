@@ -13,8 +13,8 @@ export default function LoginContents() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      identificacion: "",
+      clave: "",
     },
   });
 
@@ -26,11 +26,11 @@ export default function LoginContents() {
   //----------------------render--------------------
   return (
     <View
-    style={{
-      height:"100%",
-      marginTop:40,
-      backgroundColor:"lightblue"
-    }}
+      style={{
+        height: "100%",
+        marginTop: 40,
+        backgroundColor: "lightblue",
+      }}
     >
       {auth ? (
         <Display />
@@ -43,17 +43,20 @@ export default function LoginContents() {
           }}
         >
           <Text
-          style={{
-            fontSize:20,
-            marginTop:50}}
-          >Bienvenido a Calixto</Text>
+            style={{
+              fontSize: 20,
+              marginTop: 50,
+            }}
+          >
+            Bienvenido a Calixto
+          </Text>
 
           <View
             //frame of the loging form
             style={{
-              borderWidth:1,
-              borderRadius:15,
-              borderColor:"darkblue",
+              borderWidth: 1,
+              borderRadius: 15,
+              borderColor: "darkblue",
               backgroundColor: "lightgrey",
               width: "80%",
               marginTop: 80,
@@ -74,13 +77,12 @@ export default function LoginContents() {
                   value={value}
                   backgroundColor={"white"}
                   color={"black"}
-                  marginBottom={20}
                 />
               )}
-              name="identificación"
+              name="identificacion"
             />
-            {errors.firstName && (
-              <Text style={{ color: "red" }}>😯👆🏻 This is required.</Text>
+            {errors.identificacion && (
+              <Text style={{ color: "red" }}>😯👆🏻 Ingresa tu ID</Text>
             )}
 
             <Controller
@@ -96,7 +98,9 @@ export default function LoginContents() {
                   value={value}
                   backgroundColor={"white"}
                   color={"black"}
-                marginBottom={20}
+                  marginTop={20}
+                  marginBottom={20}
+                  
                 />
               )}
               name="clave"

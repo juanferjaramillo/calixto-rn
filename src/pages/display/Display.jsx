@@ -3,6 +3,7 @@ import { useStore } from "../../globalStore/useStore";
 import cache from "../../utility/cache";
 import { useEffect, useRef, useState } from "react";
 import getProducts from "../../hooks/getProducts";
+import getUsers from "../../hooks/getUsers";
 import NetInfo from "@react-native-community/netinfo";
 import { useWindowDimensions } from "react-native";
 import DrawerContents from "./DrawerContents";
@@ -48,18 +49,18 @@ export default function Display(props) {
   }, [newData]);
 
   async function storeAS() {
-    //Store info from API into AsyncStorage
+    //Store info from API in cache
     drawer.current.closeDrawer();
     setLoading(true);
     //fetch products from API:
     const { prodUser, prove, categ } = await getProducts(usrId);
 
-    //stores prove in cache.
+    //stores providers in cache.
     prove.map(async (p, i) => {
       await cache.storeProv(i, p);
     });
 
-    //stores categ in cache.
+    //stores categories in cache.
     categ.map(async (c, i) => {
       await cache.storeCateg(i, c);
     });
@@ -69,7 +70,12 @@ export default function Display(props) {
       await cache.storeProd(p.id, p);
       await Image.prefetch(p.prodUrl);
     });
+
     // await Image.prefetch(ICONOS)
+
+    //stores users in cache (to allow login when offline)
+    await getUsers();
+    
 
     setNewData(prodUser);
     console.log("storingEnd");
