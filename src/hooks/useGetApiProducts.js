@@ -1,5 +1,5 @@
 //get the products for a user from API and stores them in AsyncStorage
-
+import {SERVER_URL} from "@env"
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -8,7 +8,8 @@ export default function useGetApiProducts(userId) {
     let products = [];
     useEffect( ()=> {
       async function getProd () {
-          products =  (await axios(`https://calixtosrv.up.railway.app/prodsuser/${userId}`)).data
+          products =  (await axios(`${SERVER_URL}/prodsuser${userId}`)).data
+          // products =  (await axios(`https://calixtosrv.up.railway.app/prodsuser/${userId}`)).data
           setProds(products ); 
       }
       getProd();

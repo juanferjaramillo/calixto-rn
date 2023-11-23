@@ -23,9 +23,9 @@ export default function Display(props) {
 
   const drawer = useRef(null);
   let columns = 1;
-  //------------------------------------------------
+
   const usrId = useStore((state)=>state.userAuth);
-  //------------------------------------------------
+
   const cellphone = 480; //max value
   const tablet = 830; //max value
 
@@ -76,7 +76,7 @@ export default function Display(props) {
     // await Image.prefetch(ICONOS)
 
     //stores users in cache (to allow login when offline)
-    const allUsers = await getUsers();
+    const allUsers = await getUsers(); 
     allUsers?.map(async (usr, i) => await cache.storeUsers(i, usr));
 
     setNewData(prodUser);
@@ -85,7 +85,7 @@ export default function Display(props) {
   }
 
   async function displayFromAS() {
-    console.log("display from AS");
+    // console.log("display from AS");
     drawer.current.closeDrawer();
     const prods = await cache.getAll("prod");
     setFilteredProds(prods);

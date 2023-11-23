@@ -1,10 +1,11 @@
 import axios from "axios";
+import {SERVER_URL} from "@env";
 
 export default async function getUsers() {
   async function gu() {
     try {
       console.log("getUsers6 - pidiendo usuarios");
-      const allUsr = (await axios("http://192.168.1.184:3003/everyuser/")).data;
+      const allUsr = (await axios(`${SERVER_URL}/everyuser/`)).data;
       return allUsr;
     } catch (error) {
       console.log(error.message);

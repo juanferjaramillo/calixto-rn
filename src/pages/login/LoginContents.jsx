@@ -4,6 +4,8 @@ import Display from "../display/Display";
 import { useEffect, useState } from "react";
 import cache from "../../utility/cache";
 import { useStore } from "../../globalStore/useStore";
+import axios from "axios";
+import {SERVER_URL} from "@env";
 
 //=================COMPONENT==================
 export default function LoginContents() {
@@ -24,25 +26,46 @@ export default function LoginContents() {
     },
   });
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   async function gu() {
+  //     //get users
+  //     const users = await cache.getAll("user");
+  //     setUsr(users);
+  //     //users is an array of objects. {id, name, ownerId password, isActive}
+  //   }
+  //   gu();
+  // }, []);
+
+  const onSubmit = async(data) => {
+    async function gfa() {
+      // console.log("en gfa");
+      //get from API
+      const allUsr = (await axios(`${SERVER_URL}/everyuser/`)).data;
+      allUsr?.map(async (usr, i) => await cache.storeUsers(i, usr));
+      return allUsr
+    }
     async function gu() {
+      //get users
       const users = await cache.getAll("user");
       setUsr(users);
       //users is an array of objects. {id, name, ownerId password, isActive}
+      return users;
     }
-    gu();
-  }, []);
-
-  const onSubmit = (data) => {
+    try {
+      await gfa();
+    } catch (error) {
+      console.log(error.message);
+    }
+   const users = await gu()
     // console.log("data", data.identificacion, data.clave);
-    // console.log("u;",usr.length);
-    for (let i = 0; i < usr.length; i++) {
+    // console.log("u;",users.length);
+    for (let i = 0; i < users.length; i++) {
       if (
-        usr[i].id.toString().trim() === data.identificacion.toString().trim()
+        users[i].id.toString().trim() === data.identificacion.toString().trim()
       ) {
         console.log("user found");
         setAuth(0);
-        if (usr[i].password.toString() === data.clave.toString()) {
+        if (users[i].password.toString() === data.clave.toString()) {
           console.log("LoginContents 36 -ingreso permitido");
           setUserLogin(data.identificacion.toString().trim());
           setAuth(2);
@@ -50,7 +73,7 @@ export default function LoginContents() {
           // console.log("Clave errada");
           setAuth(0);
         }
-        i = usr.length;
+        i = users.length;
       } else {
         setAuth(1);
       }
@@ -59,7 +82,7 @@ export default function LoginContents() {
       console.log("clave errada");
     }
     if (auth === 1) {
-      console.log("usuario no encontrado");
+      console.log("LoginContents62-usuario no encontrado");
     }
   };
 

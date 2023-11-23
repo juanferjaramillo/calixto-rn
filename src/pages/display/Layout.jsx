@@ -5,6 +5,7 @@ import cache from "../../utility/cache";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
+import {SERVER_IMG} from "@env"
 
 //=======================COMPONENT========================
 export default function Layout(props) {
@@ -68,7 +69,8 @@ export default function Layout(props) {
           >
             <Image
               source={{
-                uri: "https://res.cloudinary.com/sthemma/calixto/logosProveedores/sfgroup.png",
+                uri: `${SERVER_IMG}/logosProveedores/sfgroup.png`,
+                // uri: "https://res.cloudinary.com/sthemma/calixto/logosProveedores/sfgroup.png",
               }}
               style={{ width: "100%", height: "100%" }}
               resizeMode="contain"
