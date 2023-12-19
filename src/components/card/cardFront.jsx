@@ -11,7 +11,7 @@ export default function CardFront(props) {
   precio_base, iva, categoria } = props;
 
   let PB = Number(precio_base).toFixed();
-  let PT = ((1 + Number(iva) / 100) * Number(PB)).toFixed();
+  let PT = ((1 + Number(iva)) * Number(PB)).toFixed();
   PB = PB.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   PT = PT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 

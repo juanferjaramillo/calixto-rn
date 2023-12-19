@@ -103,7 +103,7 @@ export default function DisplayContents(props) {
                   existencia={item.existencia}
                   icons={item.icons}
                   precio_base={item.precioBase}
-                  iva={item.tax?.tax}
+                  iva={item.tax}
                   categoria={item.category?.name}
                 />
               )}
