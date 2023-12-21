@@ -6,9 +6,18 @@ import shtemmaLogo from "../../../assets/sthemma.jpg";
 //===============COMPONENT=================
 
 export default function CardFront(props) {
-  const { ind, handleTouch, prodUrl, 
-    id, nombre, barras, existencia,
-  precio_base, iva, categoria } = props;
+  const {
+    ind,
+    handleTouch,
+    prodUrl,
+    id,
+    nombre,
+    barras,
+    existencia,
+    precio_base,
+    iva,
+    categoria,
+  } = props;
 
   let PB = Number(precio_base).toFixed();
   let PT = ((1 + Number(iva)) * Number(PB)).toFixed();
@@ -62,34 +71,38 @@ export default function CardFront(props) {
         }}
       />
 
-      <View style={{ width: "90%" }}>
+      <View style={{ width: "90%", height:40 }}>
         <Text style={{ textAlign: "center", fontWeight: "bold" }}>
           {nombre?.trim()}
         </Text>
       </View>
       <Text style={{ fontWeight: "100" }}>___________________________</Text>
 
-      <Text
-        style={{ fontSize: 13, marginBottom: 5 }}
-      >{`Precio sin IVA: $ ${PB}`}</Text>
-      <Text
-        style={{ fontSize: 13, marginBottom: 10 }}
-      >{`Precio con IVA: $ ${PT}`}</Text>
-      <Text style={{ fontSize: 13, textAlign:"center" }}>{`${categoria?.trim()}`}</Text>
-     
+      <View style={{  width:"100%" }}>
+        <Text
+          style={{ fontSize: 13, marginBottom: 5, textAlign:"center" }}
+        >{`Precio sin IVA: $ ${PB}`}</Text>
+        <Text
+          style={{ fontSize: 13, marginBottom: 10, textAlign:"center" }}
+        >{`Precio con IVA: $ ${PT}`}</Text>
+        <Text
+          style={{ fontSize: 13, textAlign: "center" }}
+        >{`${categoria?.trim()}`}</Text>
+      </View>
+
       <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center",
-            width:"100%",
-            marginTop:5
-          }}
-        >
-          <Text style={{ textAlign: "left", fontSize: 11 }}>{barras}</Text>
-          <Text style={{ textAlign: "right", fontSize: 11 }}>{existencia}</Text>
-        </View>
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+          width: "100%",
+          marginTop: 10,
+        }}
+      >
+        <Text style={{ textAlign: "left", fontSize: 11 }}>{barras}</Text>
+        <Text style={{ textAlign: "right", fontSize: 11 }}>{existencia}</Text>
+      </View>
     </View>
   );
 }

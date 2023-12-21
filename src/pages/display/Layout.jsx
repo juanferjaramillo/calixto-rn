@@ -5,6 +5,7 @@ import cache from "../../utility/cache";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 
 //=======================COMPONENT========================
 export default function Layout(props) {
@@ -57,23 +58,53 @@ export default function Layout(props) {
             justifyContent: "space-between",
             alignItems: "center",
             height: "6%",
-            minHeight:30,
+            minHeight: 30,
             backgroundColor: "darkorange",
             width: "100%",
             // backgroundColor: "purple",
           }}
         >
           <View
-            //logo
-            style={{ width: "20%", backgroundColor: "white" }}
+            style={{
+              width: "30%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              height: "100%",
+            }}
           >
-            <Image
-              source={{
-                uri: "https://res.cloudinary.com/sthemma/calixto/logosProveedores/sfgroup.png",
+            <View
+              //Menu icon
+              style={{
+                backgroundColor: "white",
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
               }}
-              style={{ width: "100%", height: "100%" }}
-              resizeMode="contain"
-            />
+            >
+              <AntDesign
+                // onPress={setModalVisible(true)}
+                name="menu-fold"
+                size={24}
+                color="black"
+              />
+            </View>
+
+            <View
+              //logo
+              style={{ flex: 3, backgroundColor: "lightblue" }}
+            >
+              <Image
+                source={{
+                  uri: "https://res.cloudinary.com/sthemma/calixto/logosProveedores/sfgroup.png",
+                }}
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="contain"
+              />
+            </View>
           </View>
 
           <Text style={{ color: "white" }}>CALIXTO</Text>
@@ -129,9 +160,11 @@ export default function Layout(props) {
               returnKeyType="search"
               onSubmitEditing={(e) => handleSearch(searchText, e)}
               autoFocus={true}
-              style={{ height: 30, marginRight: 3, 
+              style={{
+                height: 30,
+                marginRight: 3,
                 // minWidth: 100
-               }}
+              }}
             />
           </View>
         )}
@@ -146,7 +179,7 @@ export default function Layout(props) {
             backgroundColor: "darkorange",
             width: "100%",
             height: "6%",
-            minHeight:30,
+            minHeight: 30,
             color: "white",
             position: "absolute",
             top: "94%",
@@ -172,11 +205,7 @@ export default function Layout(props) {
           >
             TODOS
           </Text>
-          <MaterialIcons
-            name="logout"
-            size={24}
-            color="grey"
-          />
+          <MaterialIcons name="logout" size={24} color="grey" />
         </View>
       </View>
     </>
